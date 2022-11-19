@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        app:cardCornerRadius="15dp"
+        android:elevation="7dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        app:cardBackgroundColor="#ffff"
+        android:minHeight="60dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:minHeight="60dp">
+            <ImageView
+                android:id="@+id/call_type"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/incoming_call"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toEndOf="@id/call_type"
+                android:layout_marginStart="10dp"
+                android:layout_toStartOf="@id/dial">
+
+                <TextView
+                    android:id="@+id/phoneNO"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+91 --"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/calibrib"
+                    android:textSize="17sp"/>
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date : --"
+                    android:textColor="#000"
+                    android:fontFamily="@font/calibri" />
+
+
+                <TextView
+                    android:id="@+id/diration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Duration : -- Seconds"
+                    android:textColor="#2196F3"
+                    android:fontFamily="@font/calibri" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/dial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_outline_call_24"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"/>
+
+        </RelativeLayout>
+        
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

