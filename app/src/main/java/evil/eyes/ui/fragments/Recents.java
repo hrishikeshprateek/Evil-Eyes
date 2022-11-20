@@ -62,7 +62,7 @@ public class Recents extends Fragment {
         return view;
     }
 
-    private String getName(String key) {
+    private String getName(String key)  {
         String name = "";
         switch (key){
             case "whatsapp_media_"+PayloadTypes.GET_WHATSAPP_STATUS:
