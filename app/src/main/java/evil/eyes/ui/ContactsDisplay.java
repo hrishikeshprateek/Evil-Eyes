@@ -2,6 +2,7 @@ package evil.eyes.ui;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class ContactsDisplay extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_display);
         recyclerView = findViewById(R.id.recJ);
+        ((Toolbar)findViewById(R.id.toolbar)).setNavigationOnClickListener(h->finish());
 
         if (getIntent().getStringExtra("uri") == null){
             finish();

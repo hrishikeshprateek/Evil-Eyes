@@ -2,6 +2,7 @@ package evil.eyes.ui;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -27,6 +28,8 @@ public class SmsDisplay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sms_display);
+
+        ((Toolbar)findViewById(R.id.toolbar)).setNavigationOnClickListener(h->finish());
         recyclerView = findViewById(R.id.recJ);
 
         if (getIntent().getStringExtra("uri") == null){

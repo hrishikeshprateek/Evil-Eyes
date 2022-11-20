@@ -1,11 +1,11 @@
 package evil.eyes.ui;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -15,19 +15,6 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 
 import evil.eyes.R;
 import evil.eyes.core.adapters.CallLogAdapter;
@@ -40,9 +27,10 @@ public class PhoneDisplay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_display);
+        ((Toolbar) findViewById(R.id.toolbar)).setNavigationOnClickListener(h -> finish());
         recyclerView = findViewById(R.id.rec);
 
-        if (getIntent().getStringExtra("uri") == null){
+        if (getIntent().getStringExtra("uri") == null) {
             finish();
         }
 
@@ -74,7 +62,7 @@ public class PhoneDisplay extends AppCompatActivity {
                     error.printStackTrace();
                     alertDialog.dismiss();
                 }
-            }){
+            }) {
 
                 @Override
                 public String getPostBodyContentType() {
