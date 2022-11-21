@@ -42,7 +42,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.ViewHold
             Glide.with(holder.itemView).load(jsonObject.getString("CALL_TYPE").equals("INCOMING") ? R.drawable.incoming_call : R.drawable.outgoing_call).into(holder.call_type);
             holder.duration.setText("Duration : "+jsonObject.getString("DURATION")+" Seconds");
             holder.date.setText("Date :"+jsonObject.getString("CALL_DATE"));
-            holder.phoneNo.setText(jsonObject.getString("NUMBER"));
+            holder.phoneNo.setText(jsonObject.getString("NUMBER")+" ("+(jsonObject.getString("NAME").isEmpty()?"Name N/A":jsonObject.getString("NAME"))+")");
 
             holder.call.setOnClickListener(k->{
                 Intent intent = new Intent(Intent.ACTION_CALL);
