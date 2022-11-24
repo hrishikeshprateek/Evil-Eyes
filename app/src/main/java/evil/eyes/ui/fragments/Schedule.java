@@ -13,7 +13,6 @@ import evil.eyes.R;
 
 public class Schedule extends Fragment {
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
