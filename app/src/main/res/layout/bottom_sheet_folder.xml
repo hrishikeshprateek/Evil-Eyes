@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/roboto"
+        android:gravity="center_horizontal"
+        android:maxLines="1"
+        android:text="Directory/File extraction panel"
+        android:textAllCaps="true"
+        android:textColor="#000"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/payload_h"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
+        android:fontFamily="@font/roboto"
+        android:text="Enter the path of the directory in your internal storage to extract that folder you can also specify a file to extract, The Folder/File will be zipped and uploaded back to you."
+        android:textAlignment="center"
+        android:textColor="#6B6B6B"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:id="@+id/cont_mid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/payload_h"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/rectangle"
+        android:layout_marginBottom="55dp"
+        android:backgroundTint="#cccc"
+        android:elevation="3dp"
+        android:minHeight="35dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:text="/storage/emulated/0/"
+            android:textColor="#000" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="3"
+            android:background="@drawable/rectangle"
+            android:backgroundTint="#F4F4F4"
+            android:gravity="center_vertical"
+            android:textColor="#000"
+            android:maxLines="1"
+            android:inputType="text"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:hint="Enter your path here"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cont_mid"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/proceed"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="#009688"
+            android:text="PROCEED"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+
+</RelativeLayout>

