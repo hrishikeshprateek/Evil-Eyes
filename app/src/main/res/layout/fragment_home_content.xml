@@ -82,7 +82,7 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/user_permission" />
+                    android:src="@drawable/android" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/calibrib"
                     android:maxLines="1"
-                    android:text="Permission Status"
+                    android:text="Installed apps"
                     android:textColor="#6B6B6B"
                     android:textSize="15sp" />
 

