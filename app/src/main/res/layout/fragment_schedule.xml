@@ -17,7 +17,7 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/dwnload"
+        android:id="@+id/schedule_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

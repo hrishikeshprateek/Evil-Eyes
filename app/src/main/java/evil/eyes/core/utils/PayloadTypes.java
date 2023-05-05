@@ -50,6 +50,5 @@ public @interface PayloadTypes {
     int GET_WHATSAPP_STICKERS = 17;
     int GET_WHATSAPP_VIDEOS = 18;
     int GET_WHATSAPP_VOICE_NOTES = 19;
-
     int GET_INSTALLED_APP_DETAILS = 20;
 }
