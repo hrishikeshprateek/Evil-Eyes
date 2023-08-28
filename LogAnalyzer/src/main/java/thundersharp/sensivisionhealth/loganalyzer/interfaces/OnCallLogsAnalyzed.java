@@ -8,5 +8,5 @@ import thundersharp.sensivisionhealth.loganalyzer.errors.AnalyzeException;
 public interface OnCallLogsAnalyzed {
     void onExtractionSuccessFull(JSONObject data);
     void onFailedToAnalyze(AnalyzeException analyzeException);
-    void onProgress(String status);
+    void onProgress(int processed, long total);
 }

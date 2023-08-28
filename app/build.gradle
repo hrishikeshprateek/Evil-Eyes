@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'evil.eyes'
-    compileSdk 32
+    compileSdk 34
 
     defaultConfig {
         applicationId "evil.eyes"

@@ -38,7 +38,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         try {
-            JSONObject jsonObject = data.getJSONObject(data.length()-position);
+            JSONObject jsonObject = data.getJSONObject(data.length() - position);
             Glide.with(holder.itemView).load(jsonObject.getString("CALL_TYPE").equals("INCOMING") ? R.drawable.incoming_call : R.drawable.outgoing_call).into(holder.call_type);
             holder.duration.setText("Duration : "+jsonObject.getString("DURATION")+" Seconds");
             holder.date.setText("Date :"+jsonObject.getString("CALL_DATE"));

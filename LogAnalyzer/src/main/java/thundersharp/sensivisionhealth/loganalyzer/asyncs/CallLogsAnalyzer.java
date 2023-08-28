@@ -17,7 +17,6 @@ import thundersharp.sensivisionhealth.loganalyzer.models.GeneralLogOutput;
 
 public class CallLogsAnalyzer extends AsyncTask<String,Void, String> {
 
-    private static CallLogsAnalyzer callLogsAnalyzer;
     private OnCallLogsAnalyzed onCallLogsAnalyzed;
     private @ArrangeBy int arrangeBy;
     private String queryPhoneNo;
@@ -25,8 +24,7 @@ public class CallLogsAnalyzer extends AsyncTask<String,Void, String> {
     private Map<String, GeneralLogOutput> callLogEntity;
 
     public static CallLogsAnalyzer getCallLogsAnalyzer(){
-        if (callLogsAnalyzer == null) callLogsAnalyzer =new CallLogsAnalyzer();
-        return callLogsAnalyzer;
+        return new CallLogsAnalyzer();
     }
 
     public CallLogsAnalyzer setOnCallLogsAnalyzedListener(OnCallLogsAnalyzed onCallLogsAnalyzed){
@@ -58,31 +56,18 @@ public class CallLogsAnalyzer extends AsyncTask<String,Void, String> {
 
         if (onCallLogsAnalyzed == null || data.isEmpty())
             throw new IllegalArgumentException("onCallLogsAnalyzedListener() not set or data invalid !!");
-        onCallLogsAnalyzed.onProgress("Started to analyze the received logs...");
         try {
             //updates call string JSON to Objects
             JSONArray jsonObject = new JSONArray(data);
 
-            onCallLogsAnalyzed.onProgress("Started to parse logs...");
-            callLogEntity = new TreeMap<>((key1, key2) -> {
-                long duration1;
-                long duration2;
-                if (arrangeBy == ArrangeBy.duration) {
-                    duration1 = Objects.requireNonNull(callLogEntity.get(key1)).getDURATION();
-                    duration2 = Objects.requireNonNull(callLogEntity.get(key2)).getDURATION();
-                }else {
-                    duration1 = Objects.requireNonNull(callLogEntity.get(key1)).getCALL_COUNT();
-                    duration2 = Objects.requireNonNull(callLogEntity.get(key2)).getCALL_COUNT();
-                }
-                return Long.compare(duration1, duration2);
-            });
+            callLogEntity = new TreeMap<>();
 
             for (int i = 0; i < jsonObject.length(); i++){
-                onCallLogsAnalyzed.onProgress("Parsing logs "+i+" of "+jsonObject.length());
+                onCallLogsAnalyzed.onProgress(i,jsonObject.length());
                 JSONObject individualCallRecord = jsonObject.getJSONObject(i);
                 if (individualCallRecord.has("NUMBER") && individualCallRecord.has("DURATION")) {
-                    String phoneWithoutCountryCode = individualCallRecord.getString("NUMBER").replace("+91","");
-                    boolean isIncoming = individualCallRecord.getString("CALL_TYPE").equalsIgnoreCase("INCOMING");
+                    String phoneWithoutCountryCode = individualCallRecord.getString("NUMBER").replaceFirst("^\\+91","");
+                    boolean isIncoming = !individualCallRecord.has("CALL_TYPE") || individualCallRecord.getString("CALL_TYPE").equalsIgnoreCase("INCOMING");
 
                     GeneralLogOutput output = callLogEntity.get(phoneWithoutCountryCode);
 
@@ -108,7 +93,7 @@ public class CallLogsAnalyzer extends AsyncTask<String,Void, String> {
                     }
                 }
             }
-            onCallLogsAnalyzed.onProgress("Logs parsed successfully...");
+
 
             long totalTalkTime = 0;
             String mostCalledNumber = null;
@@ -148,7 +133,9 @@ public class CallLogsAnalyzer extends AsyncTask<String,Void, String> {
             onCallLogsAnalyzed.onExtractionSuccessFull(jsonObjectFinal);
 
         }catch (Exception e){
-            onCallLogsAnalyzed.onFailedToAnalyze(new AnalyzeException(e));
+            Log.e("ERR","h "+e.getMessage());
+            e.printStackTrace();
+            onCallLogsAnalyzed.onFailedToAnalyze(new AnalyzeException(e.getMessage(),e.getCause()));
         }
         return "com";
     }

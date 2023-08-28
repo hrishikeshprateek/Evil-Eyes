@@ -17,7 +17,7 @@
         app:navigationIcon="@drawable/ic_baseline_close_24"
         android:elevation="7dp"/>
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/schedule_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,11 +26,11 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:padding="10dp"
-        android:text="Export to .vcf"
+        android:text="Analyze this log"
         android:onClick="saveResourceToFile"
         app:backgroundTint="#009688"
         app:cornerRadius="20dp"
-        app:icon="@drawable/ic_outline_upload_file_24" />
+        app:icon="@drawable/outline_analytics_24" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/searchHolder"
