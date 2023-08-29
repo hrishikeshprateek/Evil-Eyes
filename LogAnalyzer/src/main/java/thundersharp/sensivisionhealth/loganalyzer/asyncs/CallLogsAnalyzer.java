@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -15,6 +17,10 @@ import thundersharp.sensivisionhealth.loganalyzer.errors.AnalyzeException;
 import thundersharp.sensivisionhealth.loganalyzer.interfaces.OnCallLogsAnalyzed;
 import thundersharp.sensivisionhealth.loganalyzer.models.GeneralLogOutput;
 
+/**
+ * @author hrishikeshprateek
+ *
+ */
 public class CallLogsAnalyzer extends AsyncTask<String,Void, String> {
 
     private OnCallLogsAnalyzed onCallLogsAnalyzed;
@@ -27,21 +33,39 @@ public class CallLogsAnalyzer extends AsyncTask<String,Void, String> {
         return new CallLogsAnalyzer();
     }
 
+    /**
+     *
+     * @param onCallLogsAnalyzed
+     * @return
+     */
     public CallLogsAnalyzer setOnCallLogsAnalyzedListener(OnCallLogsAnalyzed onCallLogsAnalyzed){
         this.onCallLogsAnalyzed = onCallLogsAnalyzed;
         return this;
     }
 
+    /**
+     * @param operationMode
+     * @return
+     */
     public CallLogsAnalyzer setOperationMode(int operationMode) {
         this.operationMode = operationMode;
         return this;
     }
 
+    /**
+     * @param arrangeBy
+     * @return
+     */
     public CallLogsAnalyzer setArrangeBy(@ArrangeBy int arrangeBy){
         this.arrangeBy = arrangeBy;
         return this;
     }
 
+    /**
+     *
+     * @param phoneNo
+     * @return
+     */
     public CallLogsAnalyzer setQueryPhoneNo(String phoneNo){
         if (operationMode == null || operationMode == OperationModes.basicAnalyze){
             throw new IllegalArgumentException("Either operationMode() is not called or is not set to OperationModes.queryByNumber !");
@@ -50,6 +74,11 @@ public class CallLogsAnalyzer extends AsyncTask<String,Void, String> {
         return this;
     }
 
+    /**
+     *
+     * @param strings
+     * @return
+     */
     @Override
     protected String doInBackground(String... strings) {
         String data = strings[0];
@@ -60,7 +89,7 @@ public class CallLogsAnalyzer extends AsyncTask<String,Void, String> {
             //updates call string JSON to Objects
             JSONArray jsonObject = new JSONArray(data);
 
-            callLogEntity = new TreeMap<>();
+            callLogEntity = new LinkedHashMap<>();
 
             for (int i = 0; i < jsonObject.length(); i++){
                 onCallLogsAnalyzed.onProgress(i,jsonObject.length());
@@ -93,7 +122,6 @@ public class CallLogsAnalyzer extends AsyncTask<String,Void, String> {
                     }
                 }
             }
-
 
             long totalTalkTime = 0;
             String mostCalledNumber = null;
