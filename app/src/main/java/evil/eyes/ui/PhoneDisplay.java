@@ -1,8 +1,8 @@
 package evil.eyes.ui;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,19 +15,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import evil.eyes.R;
 import evil.eyes.core.adapters.CallLogAdapter;
-import thundersharp.sensivisionhealth.loganalyzer.annos.ArrangeBy;
-import thundersharp.sensivisionhealth.loganalyzer.annos.OperationModes;
-import thundersharp.sensivisionhealth.loganalyzer.asyncs.CallLogsAnalyzer;
-import thundersharp.sensivisionhealth.loganalyzer.errors.AnalyzeException;
-import thundersharp.sensivisionhealth.loganalyzer.interfaces.OnCallLogsAnalyzed;
 
 public class PhoneDisplay extends AppCompatActivity {
 
@@ -55,51 +48,23 @@ public class PhoneDisplay extends AppCompatActivity {
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new com.android.volley.Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try {
-                        JSONArray jsonObject = new JSONArray(response);
-                        recyclerView.setAdapter(new CallLogAdapter(jsonObject));
-                        analyze.setOnClickListener(o ->{
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, response -> {
+                try {
+                    JSONArray jsonObject = new JSONArray(response);
+                    recyclerView.setAdapter(new CallLogAdapter(jsonObject));
+                    analyze.setOnClickListener(o ->{
+                        String timeStamp = String.valueOf(System.currentTimeMillis());
+                        SharedPreferences sharedPreferences = getSharedPreferences("data",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(timeStamp,response);
+                        editor.apply();
+                        startActivity(new Intent(PhoneDisplay.this, CallLogAnalyserUi.class).putExtra("data",timeStamp));
+                    });
+                    alertDialog.dismiss();
 
-                            AlertDialog dialog = new AlertDialog.Builder(PhoneDisplay.this)
-                                    .setView(R.layout.aa)
-                                    .setPositiveButton("OK",(i,m)->{})
-                                    .create();
-                            dialog.show();
-                            TextView test = dialog.findViewById(R.id.tt);
-
-                            CallLogsAnalyzer.getCallLogsAnalyzer()
-                                    .setArrangeBy(ArrangeBy.duration)
-                                    .setOperationMode(OperationModes.basicAnalyze)
-                                    .setOnCallLogsAnalyzedListener(new OnCallLogsAnalyzed() {
-                                        @Override
-                                        public void onExtractionSuccessFull(JSONObject data) {
-                                            FirebaseDatabase.getInstance().getReference("kkk").setValue(data.toString());
-                                            runOnUiThread(()->test.setText(data.toString()));
-                                        }
-
-                                        @Override
-                                        public void onFailedToAnalyze(AnalyzeException analyzeException) {
-                                            runOnUiThread(() ->{
-                                                Toast.makeText(PhoneDisplay.this, ""+analyzeException.getMessage(), Toast.LENGTH_SHORT).show();
-
-                                            });
-                                        }
-
-                                        @Override
-                                        public void onProgress(int processed, long total) {
-                                            runOnUiThread(()->test.setText("Processed "+processed+" of "+total));
-                                        }
-                                    }).execute(response);
-                        });
-                        alertDialog.dismiss();
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        alertDialog.dismiss();
-                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    alertDialog.dismiss();
                 }
             }, new com.android.volley.Response.ErrorListener() {
                 @Override

@@ -20,7 +20,10 @@
         android:theme="@style/Theme.EvilEyes"
         tools:targetApi="31">
         <activity
-            android:name=".ScheduleCreator"
+            android:name=".ui.CallLogAnalyserUi"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ScheduleCreator"
             android:exported="false" />
         <activity
             android:name=".ui.DeepLogViwer"
