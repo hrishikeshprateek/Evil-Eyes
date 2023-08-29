@@ -4,11 +4,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.TreeMap;
 
 import thundersharp.sensivisionhealth.loganalyzer.annos.ArrangeBy;
 import thundersharp.sensivisionhealth.loganalyzer.annos.OperationModes;
@@ -18,8 +15,14 @@ import thundersharp.sensivisionhealth.loganalyzer.interfaces.OnCallLogsAnalyzed;
 import thundersharp.sensivisionhealth.loganalyzer.models.GeneralLogOutput;
 
 /**
+ * @apiNote Usage<br>
+ *             CallLogsAnalyzer
+ *                  .getCallLogsAnalyzer()
+ *                  .setArrangeBy(<b>{ArrangeBy}</b>)
+ *                  .setOperationMode(<b>{OperationModes}</b>)
+ *                  .execute(<b>{DATA}</b>)
  * @author hrishikeshprateek
- *
+ * An asynchronous task that analyzes call logs and generates statistics.
  */
 public class CallLogsAnalyzer extends AsyncTask<String,Void, String> {
 
@@ -34,9 +37,12 @@ public class CallLogsAnalyzer extends AsyncTask<String,Void, String> {
     }
 
     /**
-     *
-     * @param onCallLogsAnalyzed
-     * @return
+     * @see OnCallLogsAnalyzed see the main OnCallLogsAnalyzed interface class docuentation for more info
+     * @param onCallLogsAnalyzed instance of OnCallLogsAnalyzed Listener which returns <br>
+     *     <b>void onExtractionSuccessFull(JSONObject data);</b><br>
+     *     <b>void onFailedToAnalyze(AnalyzeException analyzeException);</b><br>
+     *     <b>void onProgress(int processed, long total);</b><br>
+     * @return Returns back the instance of the same initialized class
      */
     public CallLogsAnalyzer setOnCallLogsAnalyzedListener(OnCallLogsAnalyzed onCallLogsAnalyzed){
         this.onCallLogsAnalyzed = onCallLogsAnalyzed;
@@ -44,27 +50,34 @@ public class CallLogsAnalyzer extends AsyncTask<String,Void, String> {
     }
 
     /**
-     * @param operationMode
-     * @return
+     * Sets the operation mode for call log analysis. it can be either <br>
+     * <b>1. OperationModes.basicAnalyze</b><br>
+     * <b>2. OperationModes.queryByNumber</b><br>
+     * @param operationMode The operation mode to be set.
+     * @return The instance of CallLogsAnalyzer.
+     * @see OperationModes The OperationModes enum class click here.
      */
-    public CallLogsAnalyzer setOperationMode(int operationMode) {
+    public CallLogsAnalyzer setOperationMode(@OperationModes int operationMode) {
         this.operationMode = operationMode;
         return this;
     }
-
     /**
-     * @param arrangeBy
-     * @return
+     * Sets the arrangement mode for call log analysis results. It can be one among the two : <br>
+     * <b>ArrangeBy.count</b><br>
+     * <b>ArrangeBy.duration</b><br>
+     * @param arrangeBy The arrangement mode to be set.
+     * @return The instance of CallLogsAnalyzer.
+     * @see ArrangeBy The ArrangeBy enum class click here.
      */
     public CallLogsAnalyzer setArrangeBy(@ArrangeBy int arrangeBy){
         this.arrangeBy = arrangeBy;
         return this;
     }
-
     /**
-     *
-     * @param phoneNo
-     * @return
+     * Sets the phone number to query for call log analysis.
+     * @param phoneNo The phone number to be set for querying.
+     * @return The instance of CallLogsAnalyzer.
+     * @throws IllegalArgumentException If the operation mode is not set properly.
      */
     public CallLogsAnalyzer setQueryPhoneNo(String phoneNo){
         if (operationMode == null || operationMode == OperationModes.basicAnalyze){
@@ -73,11 +86,12 @@ public class CallLogsAnalyzer extends AsyncTask<String,Void, String> {
         this.queryPhoneNo = phoneNo;
         return this;
     }
-
     /**
      *
-     * @param strings
-     * @return
+     * @see IllegalArgumentException click here to read more about IllegalArgumentException class
+     * @throws IllegalArgumentException IllegalArgumentException tells weather all the parameters are set successfully or not before execution.
+     * @param strings Takes the call logs json data as input.
+     * @return Returns progress, error, analyzed data back.
      */
     @Override
     protected String doInBackground(String... strings) {
