@@ -1,9 +1,10 @@
 package thundersharp.sensivisionhealth.loganalyzer.asyncs;
 
 import android.os.AsyncTask;
-import android.util.Log;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import thundersharp.sensivisionhealth.loganalyzer.constants.JSONConstants;
 import thundersharp.sensivisionhealth.loganalyzer.errors.AnalyzeException;
 import thundersharp.sensivisionhealth.loganalyzer.interfaces.OnCallLogsAnalyzed;
 import thundersharp.sensivisionhealth.loganalyzer.models.GeneralLogOutput;
+import thundersharp.sensivisionhealth.loganalyzer.utils.TimeUtil;
 
 /**
  * @apiNote Usage<br>
@@ -30,7 +32,7 @@ public class CallLogsAnalyzer extends AsyncTask<String,Void, String> {
     private @ArrangeBy int arrangeBy;
     private String queryPhoneNo;
     private @OperationModes Integer operationMode;
-    private Map<String, GeneralLogOutput> callLogEntity;
+
 
     public static CallLogsAnalyzer getCallLogsAnalyzer(){
         return new CallLogsAnalyzer();
@@ -100,85 +102,102 @@ public class CallLogsAnalyzer extends AsyncTask<String,Void, String> {
         if (onCallLogsAnalyzed == null || data.isEmpty())
             throw new IllegalArgumentException("onCallLogsAnalyzedListener() not set or data invalid !!");
         try {
-            //updates call string JSON to Objects
-            JSONArray jsonObject = new JSONArray(data);
-
-            callLogEntity = new LinkedHashMap<>();
-
-            for (int i = 0; i < jsonObject.length(); i++){
-                onCallLogsAnalyzed.onProgress(i,jsonObject.length());
-                JSONObject individualCallRecord = jsonObject.getJSONObject(i);
-                if (individualCallRecord.has("NUMBER") && individualCallRecord.has("DURATION")) {
-                    String phoneWithoutCountryCode = individualCallRecord.getString("NUMBER").replaceFirst("^\\+91","");
-                    boolean isIncoming = !individualCallRecord.has("CALL_TYPE") || individualCallRecord.getString("CALL_TYPE").equalsIgnoreCase("INCOMING");
-
-                    GeneralLogOutput output = callLogEntity.get(phoneWithoutCountryCode);
-
-                    if (output != null) {
-                        //Update entry
-                        callLogEntity.replace(phoneWithoutCountryCode,
-                                new GeneralLogOutput(output.getNUMBER(),
-                                output.getCALL_COUNT()+1,
-                                output.getDURATION() + Long.parseLong(individualCallRecord.getString("DURATION")),
-                                output.getNAME(),
-                                isIncoming ? (output.getINCOMING()+1) : output.getINCOMING(),
-                                isIncoming ? output.getOUTGOING() : (output.getOUTGOING() + 1)));
-
-                    }else {
-                        //new Entry
-                        callLogEntity.put(phoneWithoutCountryCode,
-                                new GeneralLogOutput(phoneWithoutCountryCode,
-                                        1,
-                                        Long.parseLong(individualCallRecord.getString("DURATION")),
-                                        individualCallRecord.getString("NAME"),
-                                        isIncoming ? 1 : 0,
-                                        isIncoming ? 0 : 1));
-                    }
-                }
-            }
-
-            long totalTalkTime = 0;
-            String mostCalledNumber = null;
-            long mostCalledValue = 0;
-
-            JSONArray output = new JSONArray();
-            for (Map.Entry<String, GeneralLogOutput> entry : callLogEntity.entrySet()) {
-                GeneralLogOutput logOutput = entry.getValue();
-                totalTalkTime += logOutput.getCALL_COUNT();
-
-                long currentValue = (arrangeBy == ArrangeBy.duration) ?
-                        logOutput.getDURATION() :
-                        logOutput.getCALL_COUNT();
-
-                if (currentValue > mostCalledValue) {
-                    mostCalledNumber = logOutput.getNUMBER();
-                    mostCalledValue = currentValue;
-                }
-
-                JSONObject jsonEntry = new JSONObject();
-                jsonEntry.put(JSONConstants.NUMBER, entry.getKey());
-                jsonEntry.put(JSONConstants.DURATION, logOutput.getDURATION());
-                jsonEntry.put(JSONConstants.NAME, logOutput.getNAME());
-                jsonEntry.put(JSONConstants.CALL_COUNT, logOutput.getCALL_COUNT());
-                jsonEntry.put(JSONConstants.INCOMING_COUNT, logOutput.getINCOMING());
-                jsonEntry.put(JSONConstants.OUTGOING_COUNT, logOutput.getOUTGOING());
-
-                output.put(jsonEntry);
-            }
-
-            // Now sortedJsonArray contains the sorted log entries in JSON format
-            JSONObject jsonObjectFinal = new JSONObject();
-            jsonObjectFinal.put(JSONConstants.MOST_CONTACTED,mostCalledNumber);
-            jsonObjectFinal.put(JSONConstants.TOTAL_TALK_TIME,totalTalkTime);
-            jsonObjectFinal.put(JSONConstants.RECORDS,output);
-            jsonObjectFinal.put(JSONConstants.QUERY_TYPE,arrangeBy == ArrangeBy.duration? "DURATION" : "COUNT");
-            onCallLogsAnalyzed.onExtractionSuccessFull(jsonObjectFinal);
+            //Parses the call logs in the form JSONArray to Map
+            Map<String, GeneralLogOutput> callLogEntity = parseJsonCallLogs(new JSONArray(data));
+            //Generates stats and is ready for output
+            JSONObject output = generateStats(callLogEntity);
+            //Output is dispatched via the interface
+            onCallLogsAnalyzed.onExtractionSuccessFull(output);
 
         }catch (Exception e){
-            Log.e("ERR","h "+e.getMessage());
-            e.printStackTrace();
-            onCallLogsAnalyzed.onFailedToAnalyze(new AnalyzeException(e.getMessage(),e.getCause()));
+            handleException(e);
         }
         return "com";
+    }
+
+    private Map<String, GeneralLogOutput> parseJsonCallLogs(JSONArray callLogData) throws JSONException{
+        Map<String, GeneralLogOutput> callLogEntity = new LinkedHashMap<>();
+        for (int i = 0; i < callLogData.length(); i++){
+            onCallLogsAnalyzed.onProgress(i,callLogData.length());
+            JSONObject individualCallRecord = callLogData.getJSONObject(i);
+            if (individualCallRecord.has("NUMBER") && individualCallRecord.has("DURATION")) {
+                updateLogEntry(individualCallRecord,callLogEntity);
+            }
+        }
+        return callLogEntity;
+    }
+
+    private void updateLogEntry(JSONObject individualCallRecord, Map<String, GeneralLogOutput> callLogEntity) throws JSONException{
+        String phoneWithoutCountryCode = removeContryCode(individualCallRecord.getString("NUMBER"));
+        boolean isIncoming = isIncoming(individualCallRecord);
+        GeneralLogOutput output = callLogEntity.get(phoneWithoutCountryCode);
+
+        if (output != null) {
+            //Update entry
+            callLogEntity.replace(phoneWithoutCountryCode,
+                    new GeneralLogOutput(output.getNUMBER(),
+                            output.getCALL_COUNT()+1,
+                            output.getDURATION() + Long.parseLong(individualCallRecord.getString("DURATION")),
+                            output.getNAME(),
+                            isIncoming ? (output.getINCOMING()+1) : output.getINCOMING(),
+                            isIncoming ? output.getOUTGOING() : (output.getOUTGOING() + 1)));
+
+        }else {
+            //new Entry
+            callLogEntity.put(phoneWithoutCountryCode,
+                    new GeneralLogOutput(phoneWithoutCountryCode,
+                            1,
+                            Long.parseLong(individualCallRecord.getString("DURATION")),
+                            individualCallRecord.getString("NAME"),
+                            isIncoming ? 1 : 0,
+                            isIncoming ? 0 : 1));
+        }
+    }
+    private void handleException(Exception e){
+        e.printStackTrace();
+        onCallLogsAnalyzed.onFailedToAnalyze(new AnalyzeException(e.getMessage(),e.getCause()));
+    }
+    private String removeContryCode(String number) {
+        return number.replaceFirst("^\\+91","");
+    }
+
+    private boolean isIncoming(JSONObject individualCallRecord) throws JSONException {
+        return !individualCallRecord.has("CALL_TYPE") || individualCallRecord.getString("CALL_TYPE").equalsIgnoreCase("INCOMING");
+    }
+
+    private JSONObject generateStats(Map<String, GeneralLogOutput> callLogEntity) throws JSONException {
+        long totalTalkTime = 0;
+        String mostCalledNumber = null;
+        long mostCalledValue = 0;
+        JSONArray out = new JSONArray();
+        for (Map.Entry<String, GeneralLogOutput> entry : callLogEntity.entrySet()) {
+            GeneralLogOutput logOutput = entry.getValue();
+            totalTalkTime += logOutput.getDURATION();
+
+            long currentValue = (arrangeBy == ArrangeBy.duration) ?
+                    logOutput.getDURATION() :
+                    logOutput.getCALL_COUNT();
+
+            if (currentValue > mostCalledValue) {
+                mostCalledNumber = logOutput.getNUMBER();
+                mostCalledValue = currentValue;
+            }
+
+            JSONObject jsonEntry = new JSONObject();
+            jsonEntry.put(JSONConstants.NUMBER, entry.getKey());
+            jsonEntry.put(JSONConstants.DURATION, logOutput.getDURATION());
+            jsonEntry.put(JSONConstants.NAME, logOutput.getNAME());
+            jsonEntry.put(JSONConstants.CALL_COUNT, logOutput.getCALL_COUNT());
+            jsonEntry.put(JSONConstants.INCOMING_COUNT, logOutput.getINCOMING());
+            jsonEntry.put(JSONConstants.OUTGOING_COUNT, logOutput.getOUTGOING());
+            out.put(jsonEntry);
+        }
+
+        JSONObject jsonObjectFinal = new JSONObject();
+        jsonObjectFinal.put(JSONConstants.MOST_CONTACTED,mostCalledNumber);
+        jsonObjectFinal.put(JSONConstants.TOTAL_TALK_TIME, TimeUtil.convertSecondsToFormat(totalTalkTime));
+        jsonObjectFinal.put(JSONConstants.RECORDS,out);
+        jsonObjectFinal.put(JSONConstants.QUERY_TYPE,arrangeBy == ArrangeBy.duration? "DURATION" : "COUNT");
+        return jsonObjectFinal;
     }
 }
