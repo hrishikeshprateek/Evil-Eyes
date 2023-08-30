@@ -140,6 +140,8 @@ public class CallLogsAnalyzer extends AsyncTask<String, Void, String> {
     private void updateLogEntry(JSONObject individualCallRecord, Map<String, GeneralLogOutput> callLogEntity) throws JSONException {
         String phoneWithoutCountryCode = removeContryCode(individualCallRecord.getString("NUMBER"));
         boolean isIncoming = isIncoming(individualCallRecord);
+        boolean isOutgoing = isOutgoing(individualCallRecord);
+        boolean isMissed = isMissed(individualCallRecord);
         GeneralLogOutput output = callLogEntity.get(phoneWithoutCountryCode);
 
         if (output != null) {
@@ -150,7 +152,8 @@ public class CallLogsAnalyzer extends AsyncTask<String, Void, String> {
                             output.getDURATION() + Long.parseLong(individualCallRecord.getString("DURATION")),
                             output.getNAME(),
                             isIncoming ? (output.getINCOMING() + 1) : output.getINCOMING(),
-                            isIncoming ? output.getOUTGOING() : (output.getOUTGOING() + 1)));
+                            isOutgoing ? (output.getOUTGOING() + 1) : output.getOUTGOING(),
+                            isMissed ? (output.getMISSED() + 1) : output.getMISSED()));
 
         } else {
             //new Entry
@@ -160,7 +163,8 @@ public class CallLogsAnalyzer extends AsyncTask<String, Void, String> {
                             Long.parseLong(individualCallRecord.getString("DURATION")),
                             individualCallRecord.getString("NAME"),
                             isIncoming ? 1 : 0,
-                            isIncoming ? 0 : 1));
+                            isOutgoing ? 1 : 0,
+                            isMissed ? 1 : 0));
         }
     }
 
@@ -175,6 +179,14 @@ public class CallLogsAnalyzer extends AsyncTask<String, Void, String> {
 
     private boolean isIncoming(JSONObject individualCallRecord) throws JSONException {
         return !individualCallRecord.has("CALL_TYPE") || individualCallRecord.getString("CALL_TYPE").equalsIgnoreCase("INCOMING");
+    }
+
+    private boolean isOutgoing(JSONObject individualCallRecord) throws JSONException {
+        return !individualCallRecord.has("CALL_TYPE") || individualCallRecord.getString("CALL_TYPE").equalsIgnoreCase("OUTGOING");
+    }
+
+    private boolean isMissed(JSONObject individualCallRecord) throws JSONException {
+        return !individualCallRecord.has("CALL_TYPE") || individualCallRecord.getString("CALL_TYPE").equalsIgnoreCase("MISSED");
     }
 
     private JSONObject generateStats(List<GeneralLogOutput> callLogEntity) throws JSONException {
@@ -207,6 +219,7 @@ public class CallLogsAnalyzer extends AsyncTask<String, Void, String> {
             jsonEntry.put(JSONConstants.CALL_COUNT, logOutput.getCALL_COUNT());
             jsonEntry.put(JSONConstants.INCOMING_COUNT, logOutput.getINCOMING());
             jsonEntry.put(JSONConstants.OUTGOING_COUNT, logOutput.getOUTGOING());
+            jsonEntry.put(JSONConstants.MISSED_COUNT, logOutput.getMISSED());
             out.put(jsonEntry);
         }
 

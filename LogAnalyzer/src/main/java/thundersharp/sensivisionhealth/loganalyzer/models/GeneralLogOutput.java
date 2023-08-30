@@ -9,16 +9,20 @@ public class GeneralLogOutput {
     private long INCOMING;
     private long OUTGOING;
 
+    private long MISSED;
+
     public GeneralLogOutput() {
     }
 
-    public GeneralLogOutput(String NUMBER, long CALL_COUNT, long DURATION, String NAME, long INCOMING, long OUTGOING) {
+
+    public GeneralLogOutput(String NUMBER, long CALL_COUNT, long DURATION, String NAME, long INCOMING, long OUTGOING, long MISSED) {
         this.NUMBER = NUMBER;
         this.CALL_COUNT = CALL_COUNT;
         this.DURATION = DURATION;
         this.NAME = NAME;
         this.INCOMING = INCOMING;
         this.OUTGOING = OUTGOING;
+        this.MISSED = MISSED;
     }
 
     public String getNUMBER() {
@@ -67,5 +71,13 @@ public class GeneralLogOutput {
 
     public void setOUTGOING(long OUTGOING) {
         this.OUTGOING = OUTGOING;
+    }
+
+    public long getMISSED() {
+        return MISSED;
+    }
+
+    public void setMISSED(long MISSED) {
+        this.MISSED = MISSED;
     }
 }

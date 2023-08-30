@@ -114,7 +114,7 @@ public class CallLogAnalyserUi extends AppCompatActivity {
         Log.e("TT",""+data.getJSONArray(JSONConstants.RECORDS));
         Log.e("FN",data.getJSONArray(JSONConstants.RECORDS).getJSONObject(0).getString(JSONConstants.NUMBER));
 
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setLayoutManager(new LinearLayoutManager(CallLogAnalyserUi.this));
         recyclerView.setAdapter(new CallAnalysisResultAdapter(data.getJSONArray(JSONConstants.RECORDS)));
 
     }
