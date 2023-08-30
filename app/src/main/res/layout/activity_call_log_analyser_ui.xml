@@ -51,6 +51,7 @@
                         android:layout_height="wrap_content"
                         android:text="---- entries"
                         android:layout_marginStart="2dp"
+                        android:textSize="15sp"
                         android:textColor="#fff"
                         android:fontFamily="@font/calibri"/>
 
@@ -77,6 +78,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Call Count"
+                        android:textSize="15sp"
                         android:layout_marginStart="5dp"
                         android:textColor="#fff"
                         android:fontFamily="@font/calibri"/>
@@ -104,6 +106,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="> --- Hours"
+                        android:textSize="15sp"
                         android:layout_marginStart="5dp"
                         android:textColor="#fff"
                         android:fontFamily="@font/calibri"/>
@@ -123,6 +126,39 @@
         android:elevation="5dp"
         android:layout_marginTop="60dp"
         android:background="@drawable/curved_corners">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/curved_corners"
+            android:backgroundTint="#EFEFEF"
+            android:elevation="8dp">
+
+            <ImageView
+                android:id="@+id/like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:tint="#FF0000"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/outline_favorite_border_24"/>
+
+
+            <TextView
+                android:id="@+id/most_cont"
+                android:layout_toEndOf="@id/like"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_marginEnd="5dp"
+                android:text="Most called: 7301694135, 56% of total Talk time"
+                android:layout_marginStart="10dp"
+                android:layout_centerVertical="true"
+                android:textColor="#556B56"
+                android:fontFamily="@font/calibri"/>
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/progress_cont"

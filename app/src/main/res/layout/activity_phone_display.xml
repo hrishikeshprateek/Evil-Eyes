@@ -29,9 +29,7 @@
         android:background="@drawable/oval"
         android:text="Analyze this log"
         android:textColor="#fff"
-        android:fontFamily="@font/calibri"
-        app:backgroundTint="#009688"
-        app:cornerRadius="20dp" />
+        app:backgroundTint="#009688" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/searchHolder"
