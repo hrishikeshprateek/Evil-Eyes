@@ -3,6 +3,7 @@ package evil.eyes.ui;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -11,6 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -18,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import evil.eyes.R;
+import evil.eyes.core.adapters.CallAnalysisResultAdapter;
 import thundersharp.sensivisionhealth.loganalyzer.annos.ArrangeBy;
 import thundersharp.sensivisionhealth.loganalyzer.annos.OperationModes;
 import thundersharp.sensivisionhealth.loganalyzer.asyncs.CallLogsAnalyzer;
@@ -33,6 +38,7 @@ public class CallLogAnalyserUi extends AppCompatActivity {
     private boolean f = false;
     private TextView entries_log,tv,sortBy,talkTime,most_cont;
     private RelativeLayout progress_cont;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,7 @@ public class CallLogAnalyserUi extends AppCompatActivity {
         talkTime = findViewById(R.id.talkTime);
         progress_cont = findViewById(R.id.progress_cont);
         most_cont = findViewById(R.id.most_cont);
+        recyclerView = findViewById(R.id.recyclerView);
 
         progress_cont.setVisibility(View.VISIBLE);
 
@@ -62,11 +69,9 @@ public class CallLogAnalyserUi extends AppCompatActivity {
                         .setOnCallLogsAnalyzedListener(new OnCallLogsAnalyzed() {
                             @Override
                             public void onExtractionSuccessFull(JSONObject data) {
-                                FirebaseDatabase.getInstance().getReference("kkk").setValue(data.toString());
                                 runOnUiThread(() -> {
                                     try {
                                         updateUI(data);
-
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -106,9 +111,11 @@ public class CallLogAnalyserUi extends AppCompatActivity {
         double hrs = Double.parseDouble(time.substring(0,time.indexOf(" h")));
         most_cont.setText("Most called:" +data.getString(JSONConstants.MOST_CONTACTED)+", "+Math.round((hrs/Double.parseDouble(totalTTH)) * 100)+"% of total Talk time");
 
-        Log.e("TT",""+Double.parseDouble(totalTTH));
-        Log.e("F",""+hrs);
+        Log.e("TT",""+data.getJSONArray(JSONConstants.RECORDS));
         Log.e("FN",data.getJSONArray(JSONConstants.RECORDS).getJSONObject(0).getString(JSONConstants.NUMBER));
+
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setAdapter(new CallAnalysisResultAdapter(data.getJSONArray(JSONConstants.RECORDS)));
 
     }
 
