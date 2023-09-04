@@ -3,7 +3,6 @@ package evil.eyes.ui;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -14,11 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import evil.eyes.R;
@@ -115,7 +110,7 @@ public class CallLogAnalyserUi extends AppCompatActivity {
         Log.e("FN",data.getJSONArray(JSONConstants.RECORDS).getJSONObject(0).getString(JSONConstants.NUMBER));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(CallLogAnalyserUi.this));
-        recyclerView.setAdapter(new CallAnalysisResultAdapter(data.getJSONArray(JSONConstants.RECORDS)));
+        recyclerView.setAdapter(new CallAnalysisResultAdapter(data.getJSONArray(JSONConstants.RECORDS),timeStamp));
 
     }
 

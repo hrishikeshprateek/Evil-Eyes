@@ -20,6 +20,9 @@
         android:theme="@style/Theme.EvilEyes"
         tools:targetApi="31">
         <activity
+            android:name=".ui.IndivisualAnalysis"
+            android:exported="false" />
+        <activity
             android:name=".ui.CallLogAnalyserUi"
             android:exported="false" />
         <activity

@@ -1,5 +1,6 @@
 package evil.eyes.core.adapters;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +17,17 @@ import org.json.JSONObject;
 import java.text.DecimalFormat;
 
 import evil.eyes.R;
+import evil.eyes.ui.IndivisualAnalysis;
 import thundersharp.sensivisionhealth.loganalyzer.constants.JSONConstants;
 
 public class CallAnalysisResultAdapter extends RecyclerView.Adapter<CallAnalysisResultAdapter.ViewHolder> {
 
     private JSONArray AnalysisData;
+    private String timeStampSharedPref;
 
-    public CallAnalysisResultAdapter(JSONArray analysisData) {
+    public CallAnalysisResultAdapter(JSONArray analysisData, String timeStamp) {
         AnalysisData = analysisData;
+        timeStampSharedPref = timeStamp;
     }
 
     @NonNull
@@ -72,7 +76,7 @@ public class CallAnalysisResultAdapter extends RecyclerView.Adapter<CallAnalysis
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView name,phone, incoming,outgoing,defMessage,missedCount,totlTalk,count;
         public ViewHolder(@NonNull View itemView) {
@@ -87,6 +91,18 @@ public class CallAnalysisResultAdapter extends RecyclerView.Adapter<CallAnalysis
             totlTalk = itemView.findViewById(R.id.tt);
             count = itemView.findViewById(R.id.count);
 
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            try {
+                view.getContext().startActivity(new Intent(view.getContext(), IndivisualAnalysis.class)
+                        .putExtra("data",timeStampSharedPref)
+                        .putExtra("phone",AnalysisData.getJSONObject(getAdapterPosition()).getString(JSONConstants.NUMBER)));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
