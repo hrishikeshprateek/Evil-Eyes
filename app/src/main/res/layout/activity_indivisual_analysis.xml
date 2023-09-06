@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,107 +11,24 @@
         android:layout_height="80dp"
         android:layout_alignParentTop="true"
         android:background="#5d1049">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="20dp">
+
             <ImageView
                 android:id="@+id/close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_close_24"
-                app:tint="#fefefe"
-                android:onClick="close"
                 android:layout_centerVertical="true"
+                android:layout_marginHorizontal="12dp"
                 android:layout_marginBottom="20dp"
-                android:layout_marginHorizontal="12dp"/>
-
-            <LinearLayout
-                android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_marginStart="3dp"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="17dp"
-                        android:layout_height="17dp"
-                        app:tint="#fff"
-                        android:src="@drawable/outline_numbers_24"/>
-                    <TextView
-                        android:id="@+id/entries_log"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="---- entries"
-                        android:layout_marginStart="2dp"
-                        android:textSize="15sp"
-                        android:textColor="#fff"
-                        android:fontFamily="@font/calibri"/>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="0.8dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="8dp"
-                    android:background="#B9B9B9"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="17dp"
-                        android:layout_height="17dp"
-                        app:tint="#fff"
-                        android:src="@drawable/outline_display_settings_24"/>
-                    <TextView
-                        android:id="@+id/sortBy"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Call Count"
-                        android:textSize="15sp"
-                        android:layout_marginStart="5dp"
-                        android:textColor="#fff"
-                        android:fontFamily="@font/calibri"/>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="0.8dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="8dp"
-                    android:background="#B9B9B9"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="17dp"
-                        android:layout_height="17dp"
-                        app:tint="#fff"
-                        android:src="@drawable/outline_timelapse_24"/>
-                    <TextView
-                        android:id="@+id/talkTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="> --- Hours"
-                        android:textSize="15sp"
-                        android:layout_marginStart="5dp"
-                        android:textColor="#fff"
-                        android:fontFamily="@font/calibri"/>
-
-                </LinearLayout>
-            </LinearLayout>
+                android:contentDescription="@string/close_icon"
+                android:onClick="close"
+                android:src="@drawable/ic_baseline_close_24"
+                app:tint="#fefefe" />
 
         </RelativeLayout>
 
@@ -120,78 +36,79 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/taskInfo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="40dp"
         android:layout_alignParentTop="true"
-        android:elevation="5dp"
-        android:backgroundTint="#f5f5f8"
         android:layout_marginTop="60dp"
-        android:background="@drawable/curved_corners">
+        android:background="@drawable/curved_corners"
+        android:backgroundTint="#EFEFEF"
+        android:elevation="8dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/curved_corners"
-            android:backgroundTint="#EFEFEF"
-            android:elevation="8dp">
-
-            <ImageView
-                android:id="@+id/like"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:tint="#FF0000"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="15dp"
-                android:src="@drawable/outline_favorite_border_24"/>
+        <ImageView
+            android:id="@+id/like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:contentDescription="@string/first_call_icon"
+            android:src="@drawable/outline_wifi_calling_3_24"
+            app:tint="#FF0000" />
 
 
-            <TextView
-                android:id="@+id/most_cont"
-                android:layout_toEndOf="@id/like"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:layout_marginEnd="5dp"
-                android:text="Most called: 7301694135, 56% of total Talk time"
-                android:layout_marginStart="10dp"
-                android:layout_centerVertical="true"
-                android:textColor="#556B56"
-                android:fontFamily="@font/calibri"/>
-
-        </RelativeLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="40dp"
-            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            android:id="@+id/recyclerView"/>
-
-        <RelativeLayout
-            android:id="@+id/progress_cont"
+        <TextView
+            android:id="@+id/most_cont"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_centerInParent="true">
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="match_parent"
-                android:progressTint="#5d1049"
-                android:elevation="5dp"
-                android:progressBackgroundTint="#DEDEDE"
-                android:layout_height="wrap_content"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
-            <TextView
-                android:id="@+id/tvw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="processing..."
-                android:layout_below="@id/progressBar"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"/>
-        </RelativeLayout>
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@id/like"
+            android:ellipsize="end"
+            android:fontFamily="@font/calibri"
+            android:maxLines="1"
+            android:text="First contacted on 21st Sept 2023"
+            android:textColor="#556B56" />
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/taskInfo"
+        android:backgroundTint="#f5f5f8"
+        android:elevation="5dp">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.anychart.AnyChartView
+                    android:id="@+id/any_chart_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true" />
+
+
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginHorizontal="10dp"
+            android:elevation="5dp"
+            android:indeterminate="true"
+            android:progressBackgroundTint="#DEDEDE"
+            android:progressTint="#5d1049" />
 
 
     </RelativeLayout>
