@@ -22,6 +22,7 @@ import thundersharp.sensivisionhealth.loganalyzer.annos.ArrangeBy;
 import thundersharp.sensivisionhealth.loganalyzer.annos.OperationModes;
 import thundersharp.sensivisionhealth.loganalyzer.asyncs.CallLogsAnalyzer;
 import thundersharp.sensivisionhealth.loganalyzer.constants.JSONConstants;
+import thundersharp.sensivisionhealth.loganalyzer.core.LogAnalyzerStarter;
 import thundersharp.sensivisionhealth.loganalyzer.errors.AnalyzeException;
 import thundersharp.sensivisionhealth.loganalyzer.interfaces.OnCallLogsAnalyzed;
 
@@ -57,11 +58,12 @@ public class CallLogAnalyserUi extends AppCompatActivity {
         progress_cont.setVisibility(View.VISIBLE);
 
         new Handler().postDelayed(() ->
-                CallLogsAnalyzer
+                LogAnalyzerStarter
                         .getCallLogsAnalyzer()
                         .setOperationMode(OperationModes.basicAnalyze)
                         .setArrangeBy(ArrangeBy.duration)
-                        .setOnCallLogsAnalyzedListener(new OnCallLogsAnalyzed() {
+                        .setDataToProcess(data)
+                        .analyze(new OnCallLogsAnalyzed() {
                             @Override
                             public void onExtractionSuccessFull(JSONObject data) {
                                 runOnUiThread(() -> {
@@ -91,7 +93,7 @@ public class CallLogAnalyserUi extends AppCompatActivity {
                                 });
 
                             }
-                        }).execute(data), 1000);
+                        }) , 1000);
 
     }
 

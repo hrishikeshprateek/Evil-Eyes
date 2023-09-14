@@ -17,12 +17,17 @@ import com.anychart.charts.Pie;
 import com.anychart.enums.Align;
 import com.anychart.enums.LegendLayout;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import evil.eyes.R;
 import thundersharp.sensivisionhealth.loganalyzer.annos.OperationModes;
 import thundersharp.sensivisionhealth.loganalyzer.asyncs.CallLogsAnalyzer;
+import thundersharp.sensivisionhealth.loganalyzer.core.LogAnalyzerStarter;
+import thundersharp.sensivisionhealth.loganalyzer.errors.AnalyzeException;
+import thundersharp.sensivisionhealth.loganalyzer.interfaces.OnCallLogsAnalyzed;
 
 public class IndivisualAnalysis extends AppCompatActivity {
 
@@ -41,12 +46,35 @@ public class IndivisualAnalysis extends AppCompatActivity {
         String dataTrans = sharedPreferences.getString(timeStamp, null);
         if (timeStamp == null || dataTrans == null || number == null) finish();
 
-        CallLogsAnalyzer
+        LogAnalyzerStarter
                 .getCallLogsAnalyzer()
                 .setOperationMode(OperationModes.queryByNumber)
-                .setQueryPhoneNo(number);
-        generateGraph();
+                .setQueryPhoneNo(number)
+                .setDataToProcess(dataTrans)
+                .analyze(new OnCallLogsAnalyzed() {
+                    @Override
+                    public void onExtractionSuccessFull(JSONObject data) {
 
+                    }
+
+                    @Override
+                    public void onFailedToAnalyze(AnalyzeException analyzeException) {
+
+                    }
+
+                    @Override
+                    public void onProgress(int processed, long total) {
+
+                    }
+                });
+        generateGraph();
+    }
+
+    public void close(View view) {
+        finish();
+    }
+
+    private void generateGraph(){
         AnyChartView anyChartView = findViewById(R.id.any_chart_view);
         anyChartView.setProgressBar(findViewById(R.id.progressBar));
 
@@ -83,13 +111,5 @@ public class IndivisualAnalysis extends AppCompatActivity {
                 .align(Align.CENTER);
 
         anyChartView.setChart(pie);
-    }
-
-    public void close(View view) {
-        finish();
-    }
-
-    private void generateGraph(){
-
     }
 }

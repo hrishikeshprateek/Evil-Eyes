@@ -21,82 +21,19 @@ import thundersharp.sensivisionhealth.loganalyzer.interfaces.OnCallLogsAnalyzed;
 import thundersharp.sensivisionhealth.loganalyzer.models.GeneralLogOutput;
 import thundersharp.sensivisionhealth.loganalyzer.utils.TimeUtil;
 
-/**
- * @author hrishikeshprateek
- * An asynchronous task that analyzes call logs and generates statistics.
- * @apiNote Usage<br>
- * CallLogsAnalyzer
- * .getCallLogsAnalyzer()
- * .setArrangeBy(<b>{ArrangeBy}</b>)
- * .setOperationMode(<b>{OperationModes}</b>)
- * .execute(<b>{DATA}</b>)
- */
+
 public class CallLogsAnalyzer extends AsyncTask<String, Void, String> {
 
-    private OnCallLogsAnalyzed onCallLogsAnalyzed;
-    private @ArrangeBy int arrangeBy;
-    private String queryPhoneNo;
-    private @OperationModes Integer operationMode;
+    private final OnCallLogsAnalyzed onCallLogsAnalyzed;
+    private final @ArrangeBy int arrangeBy;
 
-
-    public static CallLogsAnalyzer getCallLogsAnalyzer() {
-        return new CallLogsAnalyzer();
+    public static CallLogsAnalyzer getCallLogsAnalyzer(OnCallLogsAnalyzed onCallLogsAnalyzed, int arrangeBy) {
+        return new CallLogsAnalyzer(onCallLogsAnalyzed, arrangeBy);
     }
 
-    /**
-     * @param onCallLogsAnalyzed instance of OnCallLogsAnalyzed Listener which returns <br>
-     *                           <b>void onExtractionSuccessFull(JSONObject data);</b><br>
-     *                           <b>void onFailedToAnalyze(AnalyzeException analyzeException);</b><br>
-     *                           <b>void onProgress(int processed, long total);</b><br>
-     * @return Returns back the instance of the same initialized class
-     * @see OnCallLogsAnalyzed see the main OnCallLogsAnalyzed interface class docuentation for more info
-     */
-    public CallLogsAnalyzer setOnCallLogsAnalyzedListener(OnCallLogsAnalyzed onCallLogsAnalyzed) {
+    public CallLogsAnalyzer(OnCallLogsAnalyzed onCallLogsAnalyzed, int arrangeBy) {
         this.onCallLogsAnalyzed = onCallLogsAnalyzed;
-        return this;
-    }
-
-    /**
-     * Sets the operation mode for call log analysis. it can be either <br>
-     * <b>1. OperationModes.basicAnalyze</b><br>
-     * <b>2. OperationModes.queryByNumber</b><br>
-     *
-     * @param operationMode The operation mode to be set.
-     * @return The instance of CallLogsAnalyzer.
-     * @see OperationModes The OperationModes enum class click here.
-     */
-    public CallLogsAnalyzer setOperationMode(@OperationModes int operationMode) {
-        this.operationMode = operationMode;
-        return this;
-    }
-
-    /**
-     * Sets the arrangement mode for call log analysis results. It can be one among the two : <br>
-     * <b>ArrangeBy.count</b><br>
-     * <b>ArrangeBy.duration</b><br>
-     *
-     * @param arrangeBy The arrangement mode to be set.
-     * @return The instance of CallLogsAnalyzer.
-     * @see ArrangeBy The ArrangeBy enum class click here.
-     */
-    public CallLogsAnalyzer setArrangeBy(@ArrangeBy int arrangeBy) {
         this.arrangeBy = arrangeBy;
-        return this;
-    }
-
-    /**
-     * Sets the phone number to query for call log analysis.
-     *
-     * @param phoneNo The phone number to be set for querying.
-     * @return The instance of CallLogsAnalyzer.
-     * @throws IllegalArgumentException If the operation mode is not set properly.
-     */
-    public CallLogsAnalyzer setQueryPhoneNo(String phoneNo) {
-        if (operationMode == null || operationMode == OperationModes.basicAnalyze) {
-            throw new IllegalArgumentException("Either operationMode() is not called or is not set to OperationModes.queryByNumber !");
-        }
-        this.queryPhoneNo = phoneNo;
-        return this;
     }
 
     /**
