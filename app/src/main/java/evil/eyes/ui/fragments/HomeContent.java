@@ -1851,7 +1851,6 @@ public class HomeContent extends Fragment {
                         Snackbar.make(getView(), "Failed to connect to the server.", Snackbar.LENGTH_LONG)
                                 .setAction("DISMISS", v -> {
                                 }).show();
-
                     }
                 });
     }
