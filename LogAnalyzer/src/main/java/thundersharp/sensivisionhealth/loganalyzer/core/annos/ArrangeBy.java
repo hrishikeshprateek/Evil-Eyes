@@ -1,7 +1,6 @@
-package thundersharp.sensivisionhealth.loganalyzer.annos;
+package thundersharp.sensivisionhealth.loganalyzer.core.annos;
 
 import androidx.annotation.IntDef;
-import androidx.annotation.StringDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

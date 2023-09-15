@@ -14,16 +14,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import thundersharp.sensivisionhealth.loganalyzer.constants.JSONConstants;
 import thundersharp.sensivisionhealth.loganalyzer.core.helpers.CallLogsUtil;
-import thundersharp.sensivisionhealth.loganalyzer.errors.AnalyzeException;
+import thundersharp.sensivisionhealth.loganalyzer.core.errors.AnalyzeException;
 import thundersharp.sensivisionhealth.loganalyzer.interfaces.OnCallLogsAnalyzed;
-import thundersharp.sensivisionhealth.loganalyzer.models.GeneralLogOutput;
 import thundersharp.sensivisionhealth.loganalyzer.models.QueryByPhoneRecord;
 import thundersharp.sensivisionhealth.loganalyzer.utils.TimeUtil;
 

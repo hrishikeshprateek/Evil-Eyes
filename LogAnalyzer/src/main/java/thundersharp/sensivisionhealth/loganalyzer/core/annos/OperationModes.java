@@ -1,4 +1,4 @@
-package thundersharp.sensivisionhealth.loganalyzer.annos;
+package thundersharp.sensivisionhealth.loganalyzer.core.annos;
 
 import androidx.annotation.IntDef;
 

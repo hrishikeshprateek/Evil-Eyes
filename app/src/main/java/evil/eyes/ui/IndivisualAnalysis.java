@@ -25,11 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import evil.eyes.R;
-import thundersharp.sensivisionhealth.loganalyzer.annos.ArrangeBy;
-import thundersharp.sensivisionhealth.loganalyzer.annos.OperationModes;
-import thundersharp.sensivisionhealth.loganalyzer.asyncs.CallLogsAnalyzer;
+import thundersharp.sensivisionhealth.loganalyzer.core.annos.OperationModes;
 import thundersharp.sensivisionhealth.loganalyzer.core.LogAnalyzerStarter;
-import thundersharp.sensivisionhealth.loganalyzer.errors.AnalyzeException;
+import thundersharp.sensivisionhealth.loganalyzer.core.errors.AnalyzeException;
 import thundersharp.sensivisionhealth.loganalyzer.interfaces.OnCallLogsAnalyzed;
 
 public class IndivisualAnalysis extends AppCompatActivity {

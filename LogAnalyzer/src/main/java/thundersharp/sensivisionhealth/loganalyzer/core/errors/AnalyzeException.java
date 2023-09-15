@@ -1,4 +1,4 @@
-package thundersharp.sensivisionhealth.loganalyzer.errors;
+package thundersharp.sensivisionhealth.loganalyzer.core.errors;
 
 public class AnalyzeException extends Exception{
     public AnalyzeException(String message) {

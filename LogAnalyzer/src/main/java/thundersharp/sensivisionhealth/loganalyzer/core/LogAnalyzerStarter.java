@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 
 import org.jetbrains.annotations.Contract;
 
-import thundersharp.sensivisionhealth.loganalyzer.annos.ArrangeBy;
-import thundersharp.sensivisionhealth.loganalyzer.annos.OperationModes;
+import thundersharp.sensivisionhealth.loganalyzer.core.annos.ArrangeBy;
+import thundersharp.sensivisionhealth.loganalyzer.core.annos.OperationModes;
 import thundersharp.sensivisionhealth.loganalyzer.asyncs.AnalyzeCallLogsByPhone;
 import thundersharp.sensivisionhealth.loganalyzer.asyncs.CallLogsAnalyzer;
 import thundersharp.sensivisionhealth.loganalyzer.interfaces.OnCallLogsAnalyzed;

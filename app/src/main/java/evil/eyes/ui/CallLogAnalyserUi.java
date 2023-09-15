@@ -3,7 +3,6 @@ package evil.eyes.ui;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -18,12 +17,11 @@ import org.json.JSONObject;
 
 import evil.eyes.R;
 import evil.eyes.core.adapters.CallAnalysisResultAdapter;
-import thundersharp.sensivisionhealth.loganalyzer.annos.ArrangeBy;
-import thundersharp.sensivisionhealth.loganalyzer.annos.OperationModes;
-import thundersharp.sensivisionhealth.loganalyzer.asyncs.CallLogsAnalyzer;
+import thundersharp.sensivisionhealth.loganalyzer.core.annos.ArrangeBy;
+import thundersharp.sensivisionhealth.loganalyzer.core.annos.OperationModes;
 import thundersharp.sensivisionhealth.loganalyzer.constants.JSONConstants;
 import thundersharp.sensivisionhealth.loganalyzer.core.LogAnalyzerStarter;
-import thundersharp.sensivisionhealth.loganalyzer.errors.AnalyzeException;
+import thundersharp.sensivisionhealth.loganalyzer.core.errors.AnalyzeException;
 import thundersharp.sensivisionhealth.loganalyzer.interfaces.OnCallLogsAnalyzed;
 
 public class CallLogAnalyserUi extends AppCompatActivity {
