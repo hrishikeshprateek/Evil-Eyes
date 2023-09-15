@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anychart.AnyChart;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import evil.eyes.R;
+import thundersharp.sensivisionhealth.loganalyzer.annos.ArrangeBy;
 import thundersharp.sensivisionhealth.loganalyzer.annos.OperationModes;
 import thundersharp.sensivisionhealth.loganalyzer.asyncs.CallLogsAnalyzer;
 import thundersharp.sensivisionhealth.loganalyzer.core.LogAnalyzerStarter;
@@ -46,6 +49,7 @@ public class IndivisualAnalysis extends AppCompatActivity {
         String dataTrans = sharedPreferences.getString(timeStamp, null);
         if (timeStamp == null || dataTrans == null || number == null) finish();
 
+        Log.e("DATA_TRANS", dataTrans.toString());
         LogAnalyzerStarter
                 .getCallLogsAnalyzer()
                 .setOperationMode(OperationModes.queryByNumber)
@@ -54,12 +58,15 @@ public class IndivisualAnalysis extends AppCompatActivity {
                 .analyze(new OnCallLogsAnalyzed() {
                     @Override
                     public void onExtractionSuccessFull(JSONObject data) {
-
+                        runOnUiThread(() -> {
+                            Toast.makeText(IndivisualAnalysis.this, "Done !!", Toast.LENGTH_SHORT).show();
+                            ((TextView) findViewById(R.id.TEST)).setText(data.toString());
+                        });
                     }
 
                     @Override
                     public void onFailedToAnalyze(AnalyzeException analyzeException) {
-
+                        runOnUiThread(() -> Toast.makeText(IndivisualAnalysis.this, ""+ analyzeException.getMessage(), Toast.LENGTH_SHORT).show());
                     }
 
                     @Override
@@ -67,7 +74,7 @@ public class IndivisualAnalysis extends AppCompatActivity {
 
                     }
                 });
-        generateGraph();
+        //generateGraph();
     }
 
     public void close(View view) {

@@ -108,9 +108,6 @@ public class CallLogAnalyserUi extends AppCompatActivity {
         double hrs = Double.parseDouble(time.substring(0,time.indexOf(" h")));
         most_cont.setText("Most called:" +data.getString(JSONConstants.MOST_CONTACTED)+", "+Math.round((hrs/Double.parseDouble(totalTTH)) * 100)+"% of total Talk time");
 
-        Log.e("TT",""+data.getJSONArray(JSONConstants.RECORDS));
-        Log.e("FN",data.getJSONArray(JSONConstants.RECORDS).getJSONObject(0).getString(JSONConstants.NUMBER));
-
         recyclerView.setLayoutManager(new LinearLayoutManager(CallLogAnalyserUi.this));
         recyclerView.setAdapter(new CallAnalysisResultAdapter(data.getJSONArray(JSONConstants.RECORDS),timeStamp));
 

@@ -1,5 +1,7 @@
 package thundersharp.sensivisionhealth.loganalyzer.core;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import org.jetbrains.annotations.Contract;
@@ -93,14 +95,16 @@ public class LogAnalyzerStarter {
      *                           <b>void onExtractionSuccessFull(JSONObject data);</b><br>
      *                           <b>void onFailedToAnalyze(AnalyzeException analyzeException);</b><br>
      *                           <b>void onProgress(int processed, long total);</b><br>
-     * @return Returns back the instance of the same initialized class
+     * @apiNote  Returns back the instance of the same initialized class
      * @see OnCallLogsAnalyzed see the main OnCallLogsAnalyzed interface class docuentation for more info
+     * @noinspection deprecation
      */
     public void analyze(OnCallLogsAnalyzed onCallLogsAnalyzed) {
         if (onCallLogsAnalyzed == null)
             throw new IllegalArgumentException("Listener not attached !!");
         if (operationMode != null && operationMode == OperationModes.queryByNumber) {
             //Fire up the Query by number logic Api
+            Log.e("LEVEL","Async fired !!");
             AnalyzeCallLogsByPhone.getCallLogsAnalyzerByPhone(onCallLogsAnalyzed,queryPhoneNo)
                     .execute(data);
         } else {

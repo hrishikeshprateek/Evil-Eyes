@@ -1,5 +1,10 @@
 package thundersharp.sensivisionhealth.loganalyzer.asyncs;
 
+import static thundersharp.sensivisionhealth.loganalyzer.core.helpers.CallLogsUtil.isIncoming;
+import static thundersharp.sensivisionhealth.loganalyzer.core.helpers.CallLogsUtil.isMissed;
+import static thundersharp.sensivisionhealth.loganalyzer.core.helpers.CallLogsUtil.isOutgoing;
+import static thundersharp.sensivisionhealth.loganalyzer.core.helpers.CallLogsUtil.removeContryCode;
+
 import android.os.AsyncTask;
 
 import org.json.JSONArray;
@@ -16,11 +21,11 @@ import java.util.Map;
 import thundersharp.sensivisionhealth.loganalyzer.annos.ArrangeBy;
 import thundersharp.sensivisionhealth.loganalyzer.annos.OperationModes;
 import thundersharp.sensivisionhealth.loganalyzer.constants.JSONConstants;
+import thundersharp.sensivisionhealth.loganalyzer.core.helpers.CallLogsUtil;
 import thundersharp.sensivisionhealth.loganalyzer.errors.AnalyzeException;
 import thundersharp.sensivisionhealth.loganalyzer.interfaces.OnCallLogsAnalyzed;
 import thundersharp.sensivisionhealth.loganalyzer.models.GeneralLogOutput;
 import thundersharp.sensivisionhealth.loganalyzer.utils.TimeUtil;
-
 
 public class CallLogsAnalyzer extends AsyncTask<String, Void, String> {
 
@@ -108,22 +113,6 @@ public class CallLogsAnalyzer extends AsyncTask<String, Void, String> {
     private void handleException(Exception e) {
         e.printStackTrace();
         onCallLogsAnalyzed.onFailedToAnalyze(new AnalyzeException(e.getMessage(), e.getCause()));
-    }
-
-    private String removeContryCode(String number) {
-        return number.replaceFirst("^\\+91", "");
-    }
-
-    private boolean isIncoming(JSONObject individualCallRecord) throws JSONException {
-        return !individualCallRecord.has("CALL_TYPE") || individualCallRecord.getString("CALL_TYPE").equalsIgnoreCase("INCOMING");
-    }
-
-    private boolean isOutgoing(JSONObject individualCallRecord) throws JSONException {
-        return !individualCallRecord.has("CALL_TYPE") || individualCallRecord.getString("CALL_TYPE").equalsIgnoreCase("OUTGOING");
-    }
-
-    private boolean isMissed(JSONObject individualCallRecord) throws JSONException {
-        return !individualCallRecord.has("CALL_TYPE") || individualCallRecord.getString("CALL_TYPE").equalsIgnoreCase("MISSED");
     }
 
     private JSONObject generateStats(List<GeneralLogOutput> callLogEntity) throws JSONException {
