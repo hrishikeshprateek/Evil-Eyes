@@ -67,12 +67,13 @@ public class AnalyzeCallLogsByPhone extends AsyncTask<String,Void,Void> {
         Log.e("LEVEL","Async working !!");
         Map<String, QueryByPhoneRecord> callLogEntity = new LinkedHashMap<>();
         JSONArray data = new JSONArray(callLogData);
-
+        int counterProgress = 0;
         for (int i=0; i < data.length(); i++){
-            onCallLogsAnalyzed.onProgress(i, data.length());
+
             JSONObject jsonObject = data.getJSONObject(i);
             if (CallLogsUtil.removeContryCode(jsonObject.getString(JSONConstants.NUMBER)).equalsIgnoreCase(CallLogsUtil.removeContryCode(queryPhoneNumber))){
                 //Updating global indexes of values
+                onCallLogsAnalyzed.onProgress(++counterProgress, data.length());
                 queryNumber = CallLogsUtil.removeContryCode(jsonObject.getString(JSONConstants.NUMBER));
                 if (! jsonObject.getString(JSONConstants.NAME).isEmpty()) nameSaved = jsonObject.getString(JSONConstants.NAME);
                 String call_type = "UNSPECIFIED";

@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class TimeUtil {
+public final class TimeUtil {
 
     public static String convertSecondsToFormat(long seconds){
         long hours = seconds / 3600;

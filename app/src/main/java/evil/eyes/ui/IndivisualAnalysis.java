@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,9 @@ public class IndivisualAnalysis extends AppCompatActivity {
 
     private String timeStamp,number;
     private SharedPreferences sharedPreferences;
+    private ProgressBar progressBar;
+    private boolean f = false;
+    private TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,8 @@ public class IndivisualAnalysis extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
         String dataTrans = sharedPreferences.getString(timeStamp, null);
         if (timeStamp == null || dataTrans == null || number == null) finish();
+        progressBar = findViewById(R.id.progressBare);
+        tv = findViewById(R.id.tvwU);
 
         Log.e("DATA_TRANS", dataTrans.toString());
         LogAnalyzerStarter
@@ -69,6 +75,15 @@ public class IndivisualAnalysis extends AppCompatActivity {
 
                     @Override
                     public void onProgress(int processed, long total) {
+                        runOnUiThread(() -> {
+                            if (!f) {
+                                progressBar.setMax((int) total);
+                                //entries_log.setText((int) total+" entries");
+                                f = true;
+                            }
+                            progressBar.setProgress(processed);
+                            tv.setText("Found " + processed + " numbers of " + total + " entries");
+                        });
 
                     }
                 });

@@ -106,17 +106,29 @@
         </androidx.core.widget.NestedScrollView>
 
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        <RelativeLayout
+            android:id="@+id/progress_cont"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginHorizontal="10dp"
-            android:elevation="5dp"
-            android:indeterminate="true"
-            android:progressBackgroundTint="#DEDEDE"
-            android:progressTint="#5d1049" />
+            android:layout_marginHorizontal="15dp"
+            android:layout_centerInParent="true">
+            <ProgressBar
+                android:id="@+id/progressBare"
+                android:layout_width="match_parent"
+                android:progressTint="#5d1049"
+                android:elevation="5dp"
+                android:progressBackgroundTint="#DEDEDE"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+            <TextView
+                android:id="@+id/tvwU"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="processing..."
+                android:layout_below="@id/progressBar"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"/>
+        </RelativeLayout>
 
 
     </RelativeLayout>
