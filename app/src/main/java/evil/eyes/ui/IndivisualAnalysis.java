@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class IndivisualAnalysis extends AppCompatActivity {
     private ProgressBar progressBar;
     private boolean f = false;
     private TextView tv;
+    private RelativeLayout progress_cont;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class IndivisualAnalysis extends AppCompatActivity {
         String dataTrans = sharedPreferences.getString(timeStamp, null);
         if (timeStamp == null || dataTrans == null || number == null) finish();
         progressBar = findViewById(R.id.progressBare);
+        progress_cont = findViewById(R.id.progress_contt);
         tv = findViewById(R.id.tvwU);
 
         Log.e("DATA_TRANS", dataTrans.toString());
@@ -64,6 +67,7 @@ public class IndivisualAnalysis extends AppCompatActivity {
                     public void onExtractionSuccessFull(JSONObject data) {
                         runOnUiThread(() -> {
                             Toast.makeText(IndivisualAnalysis.this, "Done !!", Toast.LENGTH_SHORT).show();
+                            progress_cont.setVisibility(View.GONE);
                             ((TextView) findViewById(R.id.TEST)).setText(data.toString());
                         });
                     }
