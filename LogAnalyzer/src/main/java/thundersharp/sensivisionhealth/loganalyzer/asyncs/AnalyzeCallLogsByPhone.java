@@ -75,7 +75,7 @@ public class AnalyzeCallLogsByPhone extends AsyncTask<String,Void,Void> {
                 //Updating global indexes of values
                 onCallLogsAnalyzed.onProgress(++counterProgress, data.length());
                 queryNumber = CallLogsUtil.removeContryCode(jsonObject.getString(JSONConstants.NUMBER));
-                if (! jsonObject.getString(JSONConstants.NAME).isEmpty()) nameSaved = jsonObject.getString(JSONConstants.NAME);
+                nameSaved = jsonObject.has(JSONConstants.NAME)  ?  jsonObject.getString(JSONConstants.NAME) : "Name N/A";
                 String call_type = "UNSPECIFIED";
                 if (jsonObject.has(JSONConstants.CALL_TYPE))
                     call_type = jsonObject.getString(JSONConstants.CALL_TYPE);

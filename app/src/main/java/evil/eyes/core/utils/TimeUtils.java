@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -29,6 +31,39 @@ public class TimeUtils {
         c.set(Calendar.MILLISECOND,00);
 
         return c.getTimeInMillis();
+    }
+
+    public static String formatDateWithSuffix(String dateStr) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("dd:MM:yyyy");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("MMMM yyyy");
+
+            Date date = inputFormat.parse(dateStr);
+            int day = Integer.parseInt(new SimpleDateFormat("d").format(date));
+            String dayWithSuffix = day + getDaySuffix(day);
+
+            return dayWithSuffix + " " + outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return ""; // Handle the parsing error gracefully
+        }
+    }
+
+    // Function to get the day suffix (st, nd, rd, or th)
+    public static String getDaySuffix(int day) {
+        if (day >= 11 && day <= 13) {
+            return "th";
+        }
+        switch (day % 10) {
+            case 1:
+                return "st";
+            case 2:
+                return "nd";
+            case 3:
+                return "rd";
+            default:
+                return "th";
+        }
     }
 
     /**

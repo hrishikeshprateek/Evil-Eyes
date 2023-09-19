@@ -21,12 +21,15 @@ import com.anychart.charts.Pie;
 import com.anychart.enums.Align;
 import com.anychart.enums.LegendLayout;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import evil.eyes.R;
+import evil.eyes.core.utils.TimeUtils;
+import thundersharp.sensivisionhealth.loganalyzer.constants.JSONConstants;
 import thundersharp.sensivisionhealth.loganalyzer.core.annos.OperationModes;
 import thundersharp.sensivisionhealth.loganalyzer.core.LogAnalyzerStarter;
 import thundersharp.sensivisionhealth.loganalyzer.core.errors.AnalyzeException;
@@ -38,7 +41,7 @@ public class IndivisualAnalysis extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private ProgressBar progressBar;
     private boolean f = false;
-    private TextView tv;
+    private TextView tv,name_user,phoneNoUser,first_contact;
     private RelativeLayout progress_cont;
 
     @Override
@@ -54,6 +57,10 @@ public class IndivisualAnalysis extends AppCompatActivity {
         if (timeStamp == null || dataTrans == null || number == null) finish();
         progressBar = findViewById(R.id.progressBare);
         progress_cont = findViewById(R.id.progress_contt);
+        name_user = findViewById(R.id.name_user);
+        phoneNoUser = findViewById(R.id.phoneNoUser);
+        first_contact = findViewById(R.id.first_contact);
+
         tv = findViewById(R.id.tvwU);
 
         Log.e("DATA_TRANS", dataTrans.toString());
@@ -67,8 +74,13 @@ public class IndivisualAnalysis extends AppCompatActivity {
                     public void onExtractionSuccessFull(JSONObject data) {
                         runOnUiThread(() -> {
                             Toast.makeText(IndivisualAnalysis.this, "Done !!", Toast.LENGTH_SHORT).show();
-                            progress_cont.setVisibility(View.GONE);
-                            ((TextView) findViewById(R.id.TEST)).setText(data.toString());
+                            try {
+                                updateUI(data);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Toast.makeText(IndivisualAnalysis.this, " "+e.getMessage() , Toast.LENGTH_SHORT).show();
+                            }
+
                         });
                     }
 
@@ -92,6 +104,19 @@ public class IndivisualAnalysis extends AppCompatActivity {
                     }
                 });
         //generateGraph();
+    }
+
+    private void updateUI(JSONObject data) throws Exception {
+        progress_cont.setVisibility(View.GONE);
+        ((TextView) findViewById(R.id.TEST)).setText(data.toString());
+        name_user.setText(data.getString(JSONConstants.NAME_SAVED));
+        phoneNoUser.setText(data.getString(JSONConstants.QUERY_NUMBER));
+        first_contact.setText("First Contacted on "+ TimeUtils.formatDateWithSuffix(
+                data.getJSONArray(JSONConstants.DAILY_RECORDS)
+                        .getJSONObject(0)
+                        .getString(JSONConstants.CALL_DATE)));
+
+
     }
 
     public void close(View view) {
