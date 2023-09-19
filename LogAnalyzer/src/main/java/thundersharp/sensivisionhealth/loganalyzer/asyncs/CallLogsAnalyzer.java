@@ -100,7 +100,7 @@ public class CallLogsAnalyzer extends AsyncTask<String, Void, String> {
                     new GeneralLogOutput(phoneWithoutCountryCode,
                             1,
                             Long.parseLong(individualCallRecord.getString("DURATION")),
-                            individualCallRecord.getString("NAME"),
+                            individualCallRecord.has("NAME") ? individualCallRecord.getString("NAME") : "N/A",
                             isIncoming ? 1 : 0,
                             isOutgoing ? 1 : 0,
                             isMissed ? 1 : 0));
