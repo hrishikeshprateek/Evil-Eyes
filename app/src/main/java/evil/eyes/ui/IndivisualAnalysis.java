@@ -3,6 +3,8 @@ package evil.eyes.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.fonts.FontStyle;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -108,13 +110,18 @@ public class IndivisualAnalysis extends AppCompatActivity {
 
     private void updateUI(JSONObject data) throws Exception {
         progress_cont.setVisibility(View.GONE);
+        String date = TimeUtils.formatDateWithSuffix(
+                data.getJSONArray(JSONConstants.DAILY_RECORDS)
+                        .getJSONObject(0)
+                        .getString(JSONConstants.CALL_DATE));
         ((TextView) findViewById(R.id.TEST)).setText(data.toString());
         name_user.setText(data.getString(JSONConstants.NAME_SAVED));
         phoneNoUser.setText(data.getString(JSONConstants.QUERY_NUMBER));
-        first_contact.setText("First Contacted on "+ TimeUtils.formatDateWithSuffix(
-                data.getJSONArray(JSONConstants.DAILY_RECORDS)
-                        .getJSONObject(0)
-                        .getString(JSONConstants.CALL_DATE)));
+        first_contact.setText("First Contacted on "+ date);
+
+
+        generateGraph(date,data);
+
 
 
     }
@@ -123,9 +130,8 @@ public class IndivisualAnalysis extends AppCompatActivity {
         finish();
     }
 
-    private void generateGraph(){
+    private void generateGraph(String date, JSONObject dataRecord) throws JSONException {
         AnyChartView anyChartView = findViewById(R.id.any_chart_view);
-        anyChartView.setProgressBar(findViewById(R.id.progressBar));
 
         Pie pie = AnyChart.pie();
 
@@ -137,21 +143,19 @@ public class IndivisualAnalysis extends AppCompatActivity {
         });
 
         List<DataEntry> data = new ArrayList<>();
-        data.add(new ValueDataEntry("Apples", 6371664));
-        data.add(new ValueDataEntry("Pears", 789622));
-        data.add(new ValueDataEntry("Bananas", 7216301));
-        data.add(new ValueDataEntry("Grapes", 1486621));
-        data.add(new ValueDataEntry("Oranges", 1200000));
+        data.add(new ValueDataEntry("Outgoing", dataRecord.getInt(JSONConstants.OUTGOING_COUNT_OUT)));
+        data.add(new ValueDataEntry("Incoming", dataRecord.getInt(JSONConstants.INCOMING_COUNT_OUT)));
+        data.add(new ValueDataEntry("Missed", dataRecord.getInt(JSONConstants.MISSED_COUNT_OUT)));
 
         pie.data(data);
 
-        pie.title("Fruits imported in 2015 (in kg)");
-
+        /*pie.title("Call Statistics");
+        pie.title().fontColor("#000");*/
         pie.labels().position("outside");
 
         pie.legend().title().enabled(true);
         pie.legend().title()
-                .text("Retail channels")
+                .text("Data from "+ date)
                 .padding(0d, 0d, 10d, 0d);
 
         pie.legend()

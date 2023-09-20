@@ -114,10 +114,11 @@ public class CallLogAnalyserUi extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Toast.makeText(this, "Successfully cleaned up the memory", Toast.LENGTH_SHORT).show();
+        LogAnalyzerStarter.getCallLogsAnalyzer().releaseMemory(this);
+        /*Toast.makeText(this, "Successfully cleaned up the memory", Toast.LENGTH_SHORT).show();
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(timeStamp);
-        editor.apply();
+        editor.apply();*/
     }
 
     public void close(View view) {

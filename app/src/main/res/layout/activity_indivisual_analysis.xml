@@ -34,27 +34,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/close"
                 android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/close"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/name_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="N/A"
                     android:layout_marginStart="2dp"
-                    android:textSize="17sp"
-                    android:textColor="#fff" />
+                    android:text="N/A"
+                    android:textColor="#fff"
+                    android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/phoneNoUser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="XXXXXXXXXX"
                     android:layout_marginStart="2dp"
-                    android:textSize="13sp"
-                    android:textColor="#EFEFEF" />
+                    android:text="XXXXXXXXXX"
+                    android:textColor="#EFEFEF"
+                    android:textSize="13sp" />
 
 
             </LinearLayout>
@@ -110,21 +110,46 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <RelativeLayout
+
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_marginTop="10dp"
+                    android:elevation="5dp"
+                    android:layout_marginBottom="-20dp"
+                    android:textSize="17sp"
+                    android:fontFamily="@font/calibrib"
+                    android:text="Call Statistics" />
+
+
+                <com.anychart.AnyChartView
+                    android:id="@+id/any_chart_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="320dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"/>
+
+
+                <LinearLayout
+                    android:id="@+id/firstCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/any_chart_view"
                     android:orientation="horizontal">
+
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="140dp"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginStart="10dp"
                         android:layout_marginVertical="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
                         app:cardCornerRadius="15dp"
                         app:cardElevation="7dp">
 
@@ -133,10 +158,10 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="140dp"
-                        android:layout_weight="1"
                         android:layout_marginVertical="10dp"
-                        android:layout_marginEnd="10dp"
                         android:layout_marginStart="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
                         app:cardCornerRadius="15dp"
                         app:cardElevation="7dp">
 
@@ -151,16 +176,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true" />
 
-<!--
-                <com.anychart.AnyChartView
-                    android:id="@+id/any_chart_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true" />
--->
 
-
-            </RelativeLayout>
+            </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
 
@@ -169,23 +186,25 @@
             android:id="@+id/progress_contt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_centerInParent="true">
+            android:layout_centerInParent="true"
+            android:layout_marginHorizontal="15dp">
+
             <ProgressBar
                 android:id="@+id/progressBare"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:progressTint="#5d1049"
+                android:layout_height="wrap_content"
                 android:elevation="5dp"
                 android:progressBackgroundTint="#DEDEDE"
-                android:layout_height="wrap_content"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+                android:progressTint="#5d1049" />
+
             <TextView
                 android:id="@+id/tvwU"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="processing..."
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"
+                android:text="processing..." />
         </RelativeLayout>
 
 
