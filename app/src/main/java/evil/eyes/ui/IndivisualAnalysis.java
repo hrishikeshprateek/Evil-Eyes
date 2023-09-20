@@ -19,9 +19,12 @@ import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.chart.common.listener.Event;
 import com.anychart.chart.common.listener.ListenersInterface;
+import com.anychart.charts.Cartesian;
 import com.anychart.charts.Pie;
 import com.anychart.enums.Align;
 import com.anychart.enums.LegendLayout;
+import com.anychart.enums.TooltipPositionMode;
+import com.anychart.graphics.vector.Stroke;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import evil.eyes.R;
+import evil.eyes.core.annos.LineChartModes;
 import evil.eyes.core.utils.TimeUtils;
 import thundersharp.sensivisionhealth.loganalyzer.constants.JSONConstants;
 import thundersharp.sensivisionhealth.loganalyzer.core.annos.OperationModes;
@@ -123,6 +127,35 @@ public class IndivisualAnalysis extends AppCompatActivity {
         generateGraph(date,data);
 
 
+
+    }
+
+    public void renderLineChart(@LineChartModes int lineChartMode, JSONObject data) throws Exception {
+        AnyChartView anyChartView = findViewById(R.id.any_chart_view_line);
+        Cartesian cartesian = AnyChart.line();
+
+        cartesian.animation(true);
+
+        cartesian.padding(10d, 20d, 5d, 20d);
+
+        cartesian.crosshair().enabled(true);
+        cartesian.crosshair()
+                .yLabel(true)
+                // TODO ystroke
+                .yStroke((Stroke) null, null, null, (String) null, (String) null);
+
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
+
+        cartesian.title("No of times called per day");
+
+        cartesian.yAxis(0).title("Dates of call Events (DD:MM:YYYY) format");
+        cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
+
+        List<DataEntry> seriesData = new ArrayList<>();
+        for (int i=0; i < data.getJSONArray(JSONConstants.DAILY_RECORDS).length(); i++){
+            JSONObject individualData = data.getJSONArray(JSONConstants.DAILY_RECORDS).optJSONObject(i);
+
+        }
 
     }
 

@@ -135,6 +135,21 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"/>
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="320dp"
+                    android:layout_margin="10dp"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="7dp">
+                    <com.anychart.AnyChartView
+                        android:id="@+id/any_chart_view_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="320dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"/>
+
+                </androidx.cardview.widget.CardView>
+
 
                 <LinearLayout
                     android:id="@+id/firstCard"
@@ -146,7 +161,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="140dp"
-                        android:layout_marginVertical="10dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="5dp"
                         android:layout_weight="1"
@@ -158,7 +173,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="140dp"
-                        android:layout_marginVertical="10dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="10dp"
                         android:layout_weight="1"
