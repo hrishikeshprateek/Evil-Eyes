@@ -59,7 +59,7 @@ public class ExpandableCardView extends RelativeLayout {
     }
 
     public void setPrimaryView(int primaryView){
-        this.
+
     }
 
     private void inflateViews(@NonNull Context context, @Nullable AttributeSet attrs){
