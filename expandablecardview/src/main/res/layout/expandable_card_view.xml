@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="7dp"
+        android:minHeight="70dp"
+        android:layout_marginVertical="5dp"
+        android:layout_marginHorizontal="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="#191818">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/top_data_holder"
+                android:layout_width="match_parent"
+                android:background="@null"
+                android:layout_height="70dp">
+
+                <ImageView
+                    android:id="@+id/notification_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_outline_notification_add_24"
+                    app:tint="#FFF"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"/>
+
+                <TextView
+                    android:id="@+id/tittle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@id/expand_collapse_icon"
+                    android:layout_toEndOf="@id/notification_icon"
+                    android:maxLines="3"
+                    android:text="hey this is a dummy text which needs to pe updated programmatically by calling .setTittle() method."
+                    android:textColor="#D3D3D3" />
+
+                <ImageView
+                    android:id="@+id/expand_collapse_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_baseline_expand_more_24"
+                    app:tint="#FFF" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/nestedView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:background="#262626">
+                <TextView
+                    android:id="@+id/desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:textAlignment="viewStart"
+                    android:paddingTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textIsSelectable="true"
+                    android:text="The basic auth credentials for the /token endpoint are the client-id and client-secret. The user credentials are the normal Spring Security user details (which default in Spring Boot to “user” and a random password).
+To switch off the auto-configuration and configure the Authorization Server features yourself just add a @Bean of type AuthorizationServerConfigurer.
+If you use your own authorization server configuration to configure the list of valid clients through an instance of ClientDetailsServiceConfigurer as shown below, take note that the passwords you configure here are subject to the modernized password storage that came with Spring Security 5"
+                    android:textColor="#B3B3B3"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

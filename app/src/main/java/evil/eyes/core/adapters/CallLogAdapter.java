@@ -2,6 +2,7 @@ package evil.eyes.core.adapters;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,8 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         try {
-            JSONObject jsonObject = data.getJSONObject(data.length() - position);
+            JSONObject jsonObject = data.getJSONObject(data.length() - (position +1));
+
             Glide.with(holder.itemView).load(jsonObject.getString("CALL_TYPE").equals("INCOMING") ? R.drawable.incoming_call : R.drawable.outgoing_call).into(holder.call_type);
             holder.duration.setText("Duration : "+jsonObject.getString("DURATION")+" Seconds");
             holder.date.setText("Date :"+jsonObject.getString("CALL_DATE"));
