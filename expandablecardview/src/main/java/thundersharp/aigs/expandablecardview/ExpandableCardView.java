@@ -23,7 +23,7 @@ public class ExpandableCardView extends RelativeLayout {
 
     private RelativeLayout top_container;
     private RelativeLayout bottom_container;
-    private TextView tittle,desc;
+    private TextView desc;
 
     private ImageView imageView;
 
@@ -47,7 +47,7 @@ public class ExpandableCardView extends RelativeLayout {
 
 
     public void setTittle(String tittleText){
-        tittle.setText(tittleText);
+        //tittle.setText(tittleText);
     }
 
     public void setDescription(String description){
@@ -68,7 +68,7 @@ public class ExpandableCardView extends RelativeLayout {
         top_container = view.findViewById(R.id.top_data_holder);
         bottom_container = view.findViewById(R.id.nestedView);
         imageView = view.findViewById(R.id.expand_collapse_icon);
-        tittle = view.findViewById(R.id.tittle);
+//        tittle = view.findViewById(R.id.tittle);
         desc = view.findViewById(R.id.desc);
 
         top_container.setOnClickListener(n -> {

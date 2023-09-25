@@ -9,9 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="7dp"
-        android:minHeight="70dp"
+        android:minHeight="50dp"
         android:layout_marginVertical="5dp"
-        android:layout_marginHorizontal="10dp"
         app:cardCornerRadius="10dp"
         app:cardBackgroundColor="#191818">
 
@@ -25,30 +24,32 @@
                 android:id="@+id/top_data_holder"
                 android:layout_width="match_parent"
                 android:background="@null"
-                android:layout_height="70dp">
+                android:layout_height="50dp">
 
-                <ImageView
-                    android:id="@+id/notification_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_outline_notification_add_24"
-                    app:tint="#FFF"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"/>
-
-                <TextView
+                <LinearLayout
                     android:id="@+id/tittle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_toStartOf="@id/expand_collapse_icon"
-                    android:layout_toEndOf="@id/notification_icon"
-                    android:maxLines="3"
-                    android:text="hey this is a dummy text which needs to pe updated programmatically by calling .setTittle() method."
-                    android:textColor="#D3D3D3" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"/>
+
+                    <TextView
+                        android:id="@+id/timeTotal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+
+
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/expand_collapse_icon"

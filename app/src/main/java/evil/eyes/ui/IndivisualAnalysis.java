@@ -1,12 +1,10 @@
 package evil.eyes.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.fonts.FontStyle;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -29,10 +27,10 @@ import com.anychart.enums.Align;
 import com.anychart.enums.Anchor;
 import com.anychart.enums.LegendLayout;
 import com.anychart.enums.MarkerType;
-import com.anychart.enums.Orientation;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import evil.eyes.R;
+import evil.eyes.core.adapters.IndivisualDayCallLogAdapter;
 import evil.eyes.core.annos.LineChartModes;
 import evil.eyes.core.anychart.LineDataPoints;
 import evil.eyes.core.anychart.LineDataPointsSingle;
@@ -58,6 +57,7 @@ public class IndivisualAnalysis extends AppCompatActivity {
     private boolean f = false;
     private TextView tv,name_user,phoneNoUser,first_contact;
     private RelativeLayout progress_cont;
+    private RecyclerView dailyDataRecordRecycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +75,11 @@ public class IndivisualAnalysis extends AppCompatActivity {
         name_user = findViewById(R.id.name_user);
         phoneNoUser = findViewById(R.id.phoneNoUser);
         first_contact = findViewById(R.id.first_contact);
+        dailyDataRecordRecycler = findViewById(R.id.dailyDataRecord);
 
         tv = findViewById(R.id.tvwU);
 
-        Log.e("DATA_TRANS", dataTrans.toString());
+        //Log.e("DATA_TRANS", dataTrans.toString());
         LogAnalyzerStarter
                 .getCallLogsAnalyzer()
                 .setOperationMode(OperationModes.queryByNumber)
@@ -135,7 +136,12 @@ public class IndivisualAnalysis extends AppCompatActivity {
 
         generateGraph(date,data);
         renderLineChart(LineChartModes.MODE_DEFAULT,data);
+        updateDailyRecord(data.getJSONArray(JSONConstants.DAILY_RECORDS));
 
+    }
+
+    private void updateDailyRecord(JSONArray jsonArray) throws Exception {
+        dailyDataRecordRecycler.setAdapter(new IndivisualDayCallLogAdapter(jsonArray));
     }
 
     AnyChartView line;
@@ -148,7 +154,6 @@ public class IndivisualAnalysis extends AppCompatActivity {
         cartesian.credits(false);
         cartesian.xZoom(0);
         cartesian.xScroller(true);
-
 
         cartesian.animation(true);
         cartesian.padding(10d, 20d, 5d, 20d);

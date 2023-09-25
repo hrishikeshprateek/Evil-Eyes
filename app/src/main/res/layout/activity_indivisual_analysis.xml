@@ -186,6 +186,12 @@
 
                 </LinearLayout>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/dailyDataRecord"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
                 <TextView
                     android:id="@+id/TEST"
                     android:layout_width="match_parent"
