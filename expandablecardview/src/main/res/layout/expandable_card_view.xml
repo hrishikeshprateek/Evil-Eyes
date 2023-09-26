@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="7dp"
-        android:minHeight="50dp"
+        app:cardElevation="5dp"
+        android:minHeight="40dp"
         android:layout_marginVertical="5dp"
-        app:cardCornerRadius="10dp"
-        app:cardBackgroundColor="#191818">
+        android:layout_marginHorizontal="10dp"
+        app:cardCornerRadius="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +21,7 @@
                 android:id="@+id/top_data_holder"
                 android:layout_width="match_parent"
                 android:background="@null"
-                android:layout_height="50dp">
+                android:layout_height="40dp">
 
                 <LinearLayout
                     android:id="@+id/tittle"
@@ -32,7 +29,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:weightSum="4"
                     android:layout_toStartOf="@id/expand_collapse_icon"
                     android:orientation="horizontal">
 
@@ -40,13 +38,31 @@
                         android:id="@+id/date"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"/>
+                        android:text="Text test"
+                        android:textStyle="bold"
+                        android:layout_weight="1.5"
+                        />
 
                     <TextView
                         android:id="@+id/timeTotal"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
+                        android:layout_weight="2"
+                        android:textStyle="bold"
+                        android:textColor="#B50000"
+                        android:gravity="center"
+                         />
+
+                    <TextView
+                        android:id="@+id/callCount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="788"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                         />
+
 
 
                 </LinearLayout>
@@ -59,7 +75,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/ic_baseline_expand_more_24"
-                    app:tint="#FFF" />
+                    app:tint="#171717" />
 
             </RelativeLayout>
 
@@ -68,24 +84,106 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:background="#262626">
-                <TextView
+                android:background="#ffff">
+                <RelativeLayout
                     android:id="@+id/desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
-                    android:textAlignment="viewStart"
                     android:paddingTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:textIsSelectable="true"
-                    android:text="The basic auth credentials for the /token endpoint are the client-id and client-secret. The user credentials are the normal Spring Security user details (which default in Spring Boot to “user” and a random password).
-To switch off the auto-configuration and configure the Authorization Server features yourself just add a @Bean of type AuthorizationServerConfigurer.
-If you use your own authorization server configuration to configure the list of valid clients through an instance of ClientDetailsServiceConfigurer as shown below, take note that the passwords you configure here are subject to the modernized password storage that came with Spring Security 5"
-                    android:textColor="#B3B3B3"/>
+                    android:layout_marginBottom="10dp">
+
+                    <ProgressBar
+                        android:id="@+id/progressCall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:secondaryProgressTintMode="screen"
+                        android:progressBackgroundTintMode="screen"
+                        android:progressBackgroundTint="#FF9800"
+                        android:secondaryProgressTint="#009688"
+                        android:progressTint="#3F51B5"
+                        android:progress="25"
+                        android:secondaryProgress="65" />
+
+                    <LinearLayout
+                        android:layout_below="@id/progressCall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginHorizontal="3dp"
+                         android:weightSum="3">
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+                            <View
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:background="#3F51B5"
+                                android:layout_marginEnd="10dp"/>
+                            <TextView
+                                android:id="@+id/incomingCalls"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/calibri"
+                                android:layout_marginEnd="5dp"
+                                android:text="Incoming calls count: 45"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+                            <View
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:background="#009688"
+                                android:layout_marginEnd="10dp"/>
+
+                            <TextView
+                                android:id="@+id/outgoingCalls"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/calibri"
+                                android:layout_marginEnd="5dp"
+                                android:text="Outgoing calls count: 45"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+                            <View
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:background="#FF9800"
+                                android:layout_marginEnd="10dp"/>
+
+                            <TextView
+                                android:id="@+id/missedCalls"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/calibri"
+                                android:layout_marginEnd="5dp"
+                                android:text="Missed calls count: 34"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </RelativeLayout>
 
             </RelativeLayout>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
-</RelativeLayout>

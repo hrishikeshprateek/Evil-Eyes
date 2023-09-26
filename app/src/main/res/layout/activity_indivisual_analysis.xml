@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EFEFEF"
     tools:context=".ui.IndivisualAnalysis">
 
     <RelativeLayout
@@ -104,8 +105,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/taskInfo"
-        android:backgroundTint="#f5f5f8">
+        android:layout_below="@id/taskInfo">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -141,7 +141,7 @@
                     android:layout_height="540dp"
                     android:layout_margin="10dp"
                     app:cardCornerRadius="15dp"
-                    app:cardElevation="7dp">
+                    app:cardElevation="5dp">
                     <com.anychart.AnyChartView
                         android:id="@+id/any_chart_view_line"
                         android:layout_width="match_parent"
@@ -167,7 +167,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_weight="1"
                         app:cardCornerRadius="15dp"
-                        app:cardElevation="7dp">
+                        app:cardElevation="5dp">
 
                     </androidx.cardview.widget.CardView>
 
@@ -179,7 +179,7 @@
                         android:layout_marginEnd="10dp"
                         android:layout_weight="1"
                         app:cardCornerRadius="15dp"
-                        app:cardElevation="7dp">
+                        app:cardElevation="5dp">
 
                     </androidx.cardview.widget.CardView>
 

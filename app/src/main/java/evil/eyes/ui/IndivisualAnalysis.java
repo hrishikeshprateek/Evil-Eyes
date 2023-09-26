@@ -304,14 +304,16 @@ public class IndivisualAnalysis extends AppCompatActivity {
 
     private void generateGraph(String date, JSONObject dataRecord) throws JSONException {
         AnyChartView anyChartView = findViewById(R.id.any_chart_view);
+
         APIlib.getInstance().setActiveAnyChartView(anyChartView);
         Pie pie = AnyChart.pie();
-
+        //anyChartView.setBackgroundColor("#FFEFEFEF");
+        pie.background().enabled(true).fill("rgb(239,239,239)");
         pie.credits(false);
         pie.setOnClickListener(new ListenersInterface.OnClickListener(new String[]{"x", "value"}) {
             @Override
             public void onClick(Event event) {
-                //Toast.makeText(IndivisualAnalysis.this, event.getData().get("x") + ":" + event.getData().get("value"), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(IndivisualAna``lysis.this, event.getData().get("x") + ":" + event.getData().get("value"), Toast.LENGTH_SHORT).show();
                 try {
                 /*    if (event.getData().get("x").equalsIgnoreCase("incoming"))
                         renderLineChart(LineChartModes.MODE_INCOMING, dataRecord);

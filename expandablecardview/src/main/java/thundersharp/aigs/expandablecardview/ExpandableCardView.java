@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,11 +24,12 @@ public class ExpandableCardView extends RelativeLayout {
 
     private RelativeLayout top_container;
     private RelativeLayout bottom_container;
-    private TextView desc;
-
+    private TextView date,time,countOfTheDay,missedCalls,incomingCalls,outgoingCalls;
+    private ProgressBar progressBar;
     private ImageView imageView;
 
     private boolean isExpanded;
+    private Integer incomingCount, outgoingCount,missedCount, callCount;
     private View innerView;
 
     public ExpandableCardView(@NonNull Context context) {
@@ -46,12 +48,39 @@ public class ExpandableCardView extends RelativeLayout {
     }
 
 
-    public void setTittle(String tittleText){
-        //tittle.setText(tittleText);
+    public void setDate(String dateData){
+        date.setText(dateData);
     }
 
-    public void setDescription(String description){
-        desc.setText(description);
+    public void setDuration(String duration){
+        time.setText(duration);
+    }
+
+    public void setCallCount(int count){
+        this.callCount = count;
+        countOfTheDay.setText(count+"");
+    }
+
+    public void setIncomingCallCount(int count){
+        this.incomingCount = count;
+        incomingCalls.setText("Incoming calls count:"+count);
+    }
+
+    public void setOutgoingCallsCount(int count){
+        this.outgoingCount = count;
+        outgoingCalls.setText("Outgoing calls count:"+count);
+    }
+
+    public void setMissedCallCount(int count){
+        this.missedCount = count;
+        missedCalls.setText("Missed calls count:"+count);
+    }
+
+    public void initializeProgress() throws Exception{
+        if (callCount ==null ||incomingCount == null || outgoingCount ==null || missedCount == null) throw new Exception("Cannot render progress all params not set !!");
+        progressBar.setMax(callCount);
+        progressBar.setProgress(incomingCount,true);
+        progressBar.setSecondaryProgress(outgoingCount+incomingCount);
     }
 
     public void setInnerExpansionView(View layout){
@@ -68,8 +97,13 @@ public class ExpandableCardView extends RelativeLayout {
         top_container = view.findViewById(R.id.top_data_holder);
         bottom_container = view.findViewById(R.id.nestedView);
         imageView = view.findViewById(R.id.expand_collapse_icon);
-//        tittle = view.findViewById(R.id.tittle);
-        desc = view.findViewById(R.id.desc);
+        date = view.findViewById(R.id.date);
+        time = view.findViewById(R.id.timeTotal);
+        countOfTheDay = view.findViewById(R.id.callCount);
+        incomingCalls = view.findViewById(R.id.incomingCalls);
+        outgoingCalls = view.findViewById(R.id.outgoingCalls);
+        missedCalls = view.findViewById(R.id.missedCalls);
+        progressBar = view.findViewById(R.id.progressCall);
 
         top_container.setOnClickListener(n -> {
             if (isExpanded){

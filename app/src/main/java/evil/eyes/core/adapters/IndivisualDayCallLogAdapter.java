@@ -20,6 +20,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import evil.eyes.R;
+import evil.eyes.core.utils.TimeUtils;
+import thundersharp.aigs.expandablecardview.ExpandableCardView;
+import thundersharp.sensivisionhealth.loganalyzer.constants.JSONConstants;
+import thundersharp.sensivisionhealth.loganalyzer.utils.TimeUtil;
 
 public class IndivisualDayCallLogAdapter extends RecyclerView.Adapter<IndivisualDayCallLogAdapter.ViewHolder> implements Filterable {
 
@@ -39,8 +43,15 @@ public class IndivisualDayCallLogAdapter extends RecyclerView.Adapter<Indivisual
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         try {
             JSONObject jsonObject = data.getJSONObject(data.length() - (position +1));
+            holder.expandableCardView.setDate(TimeUtils.formatDateWithSuffix(jsonObject.getString(JSONConstants.CALL_DATE)));
+            holder.expandableCardView.setDuration(TimeUtil.convertSecondsToFormat(jsonObject.getLong(JSONConstants.DURATION)));
+            holder.expandableCardView.setCallCount((int) jsonObject.getLong(JSONConstants.CALL_COUNT));
+            holder.expandableCardView.setIncomingCallCount((int) jsonObject.getLong(JSONConstants.INCOMING_COUNT_OUT));
+            holder.expandableCardView.setOutgoingCallsCount((int) jsonObject.getLong(JSONConstants.OUTGOING_COUNT_OUT));
+            holder.expandableCardView.setMissedCallCount((Integer) jsonObject.get(JSONConstants.MISSED_COUNT_OUT));
+            holder.expandableCardView.initializeProgress();
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -57,8 +68,12 @@ public class IndivisualDayCallLogAdapter extends RecyclerView.Adapter<Indivisual
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        private ExpandableCardView expandableCardView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            expandableCardView = itemView.findViewById(R.id.expand);
 
         }
     }

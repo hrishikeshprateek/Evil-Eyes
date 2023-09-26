@@ -12,7 +12,9 @@ public final class TimeUtil {
         long hours = seconds / 3600;
         long minutes = (seconds % 3600) / 60;
         long remainingSeconds = seconds % 60;
-        return hours + " hours, " + minutes + " minutes, " + remainingSeconds + " seconds";
+        return (hours <= 9 ? "0" + hours : hours) + " hours, " +
+                (minutes <= 9 ? "0" + minutes : minutes) + " min, " +
+                (remainingSeconds <= 9 ? "0" + remainingSeconds : remainingSeconds) + " sec";
     }
 
     public static String convertFullDateToDDMMYYYY(String fullDate){
