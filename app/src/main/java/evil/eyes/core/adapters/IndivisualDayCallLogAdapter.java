@@ -9,6 +9,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +23,7 @@ import org.json.JSONObject;
 import evil.eyes.R;
 import evil.eyes.core.utils.TimeUtils;
 import thundersharp.aigs.expandablecardview.ExpandableCardView;
+import thundersharp.aigs.expandablecardview.OnCardExpandedListener;
 import thundersharp.sensivisionhealth.loganalyzer.constants.JSONConstants;
 import thundersharp.sensivisionhealth.loganalyzer.utils.TimeUtil;
 
@@ -36,20 +38,35 @@ public class IndivisualDayCallLogAdapter extends RecyclerView.Adapter<Indivisual
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_indivisual_day_record,parent,false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_indivisual_day_record, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         try {
-            JSONObject jsonObject = data.getJSONObject(data.length() - (position +1));
+            JSONObject jsonObject = data.getJSONObject(data.length() - (position + 1));
             holder.expandableCardView.setDate(TimeUtils.formatDateWithSuffix(jsonObject.getString(JSONConstants.CALL_DATE)));
             holder.expandableCardView.setDuration(TimeUtil.convertSecondsToFormat(jsonObject.getLong(JSONConstants.DURATION)));
             holder.expandableCardView.setCallCount((int) jsonObject.getLong(JSONConstants.CALL_COUNT));
-            holder.expandableCardView.setIncomingCallCount((int) jsonObject.getLong(JSONConstants.INCOMING_COUNT_OUT));
-            holder.expandableCardView.setOutgoingCallsCount((int) jsonObject.getLong(JSONConstants.OUTGOING_COUNT_OUT));
-            holder.expandableCardView.setMissedCallCount((Integer) jsonObject.get(JSONConstants.MISSED_COUNT_OUT));
-            holder.expandableCardView.initializeProgress();
+
+            holder.expandableCardView.setOnCardExpandedListener(new OnCardExpandedListener() {
+                @Override
+                public void onCardExpanded() {
+                    try {
+                        holder.expandableCardView.setIncomingCallCount((int) jsonObject.getLong(JSONConstants.INCOMING_COUNT));
+                        holder.expandableCardView.setOutgoingCallsCount((int) jsonObject.getLong(JSONConstants.OUTGOING_COUNT));
+                        holder.expandableCardView.setMissedCallCount((Integer) jsonObject.get(JSONConstants.MISSED_COUNT));
+                        holder.expandableCardView.initializeProgress();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onCardCollapsed() {
+
+                }
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,7 +75,8 @@ public class IndivisualDayCallLogAdapter extends RecyclerView.Adapter<Indivisual
 
     @Override
     public int getItemCount() {
-        if (data != null) return data.length(); else return 0;
+        if (data != null) return data.length();
+        else return 0;
     }
 
     @Override

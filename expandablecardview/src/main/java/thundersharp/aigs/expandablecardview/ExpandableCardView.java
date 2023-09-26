@@ -21,16 +21,16 @@ import androidx.annotation.Nullable;
 public class ExpandableCardView extends RelativeLayout {
 
     private View view;
-
     private RelativeLayout top_container;
     private RelativeLayout bottom_container;
     private TextView date,time,countOfTheDay,missedCalls,incomingCalls,outgoingCalls;
     private ProgressBar progressBar;
     private ImageView imageView;
-
+    private OnCardExpandedListener onCardExpandedListener;
     private boolean isExpanded;
     private Integer incomingCount, outgoingCount,missedCount, callCount;
     private View innerView;
+
 
     public ExpandableCardView(@NonNull Context context) {
         super(context);
@@ -71,6 +71,10 @@ public class ExpandableCardView extends RelativeLayout {
         outgoingCalls.setText("Outgoing calls count:"+count);
     }
 
+    public void setOnCardExpandedListener(OnCardExpandedListener onCardExpandedListener){
+        this.onCardExpandedListener = onCardExpandedListener;
+    }
+
     public void setMissedCallCount(int count){
         this.missedCount = count;
         missedCalls.setText("Missed calls count:"+count);
@@ -80,7 +84,7 @@ public class ExpandableCardView extends RelativeLayout {
         if (callCount ==null ||incomingCount == null || outgoingCount ==null || missedCount == null) throw new Exception("Cannot render progress all params not set !!");
         progressBar.setMax(callCount);
         progressBar.setProgress(incomingCount,true);
-        progressBar.setSecondaryProgress(outgoingCount+incomingCount);
+        progressBar.setSecondaryProgress((outgoingCount+incomingCount));
     }
 
     public void setInnerExpansionView(View layout){
@@ -109,9 +113,11 @@ public class ExpandableCardView extends RelativeLayout {
             if (isExpanded){
                 isExpanded = false;
                 bottom_container.setVisibility(GONE);
+                if (onCardExpandedListener != null) onCardExpandedListener.onCardCollapsed();
                 imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_baseline_expand_more_24));
             }else {
                 isExpanded = true;
+                if (onCardExpandedListener != null) onCardExpandedListener.onCardExpanded();
                 bottom_container.setVisibility(VISIBLE);
                 imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_baseline_expand_less_24));
 
