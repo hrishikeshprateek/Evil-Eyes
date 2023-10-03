@@ -1,14 +1,11 @@
 package thundersharp.sensivisionhealth.loganalyzer.core;
 
 import static android.content.Context.MODE_PRIVATE;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-
 import org.jetbrains.annotations.Contract;
 
 import thundersharp.sensivisionhealth.loganalyzer.core.annos.ArrangeBy;
