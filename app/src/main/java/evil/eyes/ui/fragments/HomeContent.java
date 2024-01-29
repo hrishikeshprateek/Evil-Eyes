@@ -57,6 +57,7 @@ public class HomeContent extends Fragment {
 
     private AlertDialog alertDialog = null;
     private LinearLayout call_logs, sma_inbox;
+    private AppCompatButton serverConfigEdit;
     private TextToSpeech t1;
     private int progressF = 1;
 
@@ -159,11 +160,16 @@ public class HomeContent extends Fragment {
             bottomSheetDialog.show();
         });
 
+        view.findViewById(R.id.serverConfigEdit)
+                .setOnClickListener(viewWork -> {
+                    
+                });
+
         view.findViewById(R.id.gifs).setOnClickListener(b -> {
             progressF = 1;
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_whatsapp);
-            Croller croller = (Croller) bottomSheetDialog.findViewById(R.id.croller);
+            Croller croller = bottomSheetDialog.findViewById(R.id.croller);
             TextView textView = bottomSheetDialog.findViewById(R.id.payl);
             TextView tittle = bottomSheetDialog.findViewById(R.id.text);
             tittle.setText("GIFs extraction panel");

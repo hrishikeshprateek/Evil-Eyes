@@ -57,7 +57,7 @@ public class Home extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         linearLayout = findViewById(R.id.container);
         dropDown = findViewById(R.id.dropdown_menu);
-        t1=new TextToSpeech(this, status -> {
+        t1 = new TextToSpeech(this, status -> {
             if(status != TextToSpeech.ERROR) {
                 t1.setLanguage(Locale.US);
             }
