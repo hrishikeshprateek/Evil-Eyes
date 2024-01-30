@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,8 +32,10 @@ import java.util.List;
 import java.util.Locale;
 
 import evil.eyes.R;
+import evil.eyes.core.DeviceConfig;
 import evil.eyes.core.helpers.PayloadConnection;
 import evil.eyes.core.interfaces.PayloadConnectionListner;
+import evil.eyes.core.models.Devices;
 import evil.eyes.ui.fragments.HomeContent;
 import evil.eyes.ui.fragments.Logs;
 import evil.eyes.ui.fragments.Recents;
@@ -57,16 +60,24 @@ public class Home extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         linearLayout = findViewById(R.id.container);
         dropDown = findViewById(R.id.dropdown_menu);
+        TextView selected_name = findViewById(R.id.selected_name);
+        TextView device_uuid = findViewById(R.id.device_uuid);
+        Devices selected_Device = DeviceConfig.getInstance(this).initializeStorage().getSelectedDevice();
         t1 = new TextToSpeech(this, status -> {
             if(status != TextToSpeech.ERROR) {
                 t1.setLanguage(Locale.US);
             }
         });
 
+        selected_name.setText(selected_Device.getPrimaryAccountName());
+        device_uuid.setText(selected_Device.getUUID());
+
         setupTabs();
         findViewById(R.id.cPaye).setOnClickListener(l -> {
             checkPayloadConnection();
         });
+
+
 
         dropDown.setOnClickListener(o->{
             PopupMenu popupMenu = new PopupMenu(Home.this, dropDown);
@@ -128,8 +139,9 @@ public class Home extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Home"));
         tabLayout.addTab(tabLayout.newTab().setText("Recent Activity"));
         tabLayout.addTab(tabLayout.newTab().setText("Schedule"));
-        tabLayout.addTab(tabLayout.newTab().setText("Status"));
         tabLayout.addTab(tabLayout.newTab().setText("Payload Logs"));
+        tabLayout.addTab(tabLayout.newTab().setText("Devices"));
+
 
 
         gettabs(0);
@@ -150,8 +162,9 @@ public class Home extends AppCompatActivity {
         viewPagerAdapter.addFragment(new HomeContent(), "Home");
         viewPagerAdapter.addFragment(new Recents(), "Recent Activity");
         viewPagerAdapter.addFragment(new Schedule(), "Schedule");
-        viewPagerAdapter.addFragment(new Stats(), "Status");
         viewPagerAdapter.addFragment(new Logs(), "Payload Logs");
+        viewPagerAdapter.addFragment(new Stats(), "Devices");
+
 
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

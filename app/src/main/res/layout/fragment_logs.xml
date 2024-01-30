@@ -10,6 +10,51 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="15dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="170dp"
+            android:layout_centerInParent="true">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                app:lottie_autoPlay="true"
+                app:lottie_repeatMode="reverse"
+                app:lottie_loop="true"
+                android:layout_gravity="center_horizontal"
+                app:lottie_rawRes="@raw/auth"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/calibrib"
+                android:textAllCaps="true"
+                android:textColor="#000"
+                android:textSize="15sp"
+                android:text="No device selected"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/calibri"
+                android:layout_marginTop="3dp"
+                android:textAlignment="center"
+                android:text="@string/select_a_device_to_view_its_payload_activity_logs"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="120dp"
+                android:layout_height="35dp"
+                android:layout_marginVertical="10dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/circle_round"
+                android:textColor="@color/white"
+                android:text="SET DEVICE"/>
+
+        </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

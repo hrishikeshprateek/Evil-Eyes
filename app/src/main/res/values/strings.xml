@@ -13,4 +13,5 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="first_call_icon">First Call icon</string>
     <string name="close_icon">Close Icon</string>
+    <string name="select_a_device_to_view_its_payload_activity_logs">Select a device to view its payload activity logs. Setting a device is a global action and requires a restart !!</string>
 </resources>

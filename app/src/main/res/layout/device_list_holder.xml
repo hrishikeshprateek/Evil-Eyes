@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#5185ff"
+        android:layout_marginHorizontal="10dp"
+        app:cardCornerRadius="15dp"
+        android:elevation="7dp"
+        android:layout_marginVertical="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/jk"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/baseline_adjust_24"
+                android:background="@drawable/circle"
+                android:backgroundTint="#3F51B5"
+                android:padding="5dp"
+                android:layout_marginStart="10dp"
+                android:elevation="5dp"
+               android:layout_centerVertical="true"
+                app:tint="#ffffff" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/jk"
+                android:orientation="vertical"
+                android:layout_marginStart="10dp">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/calibri"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:layout_marginEnd="10dp"
+                    android:text="Name:"
+                    android:textColor="#F2FFFD"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/uuid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:layout_marginTop="2dp"
+                    android:textColor="#DAFBF7"
+                    android:layout_marginEnd="10dp"
+                    android:text="uuid: "
+                    android:textSize="14sp"/>
+
+
+                <TextView
+                    android:id="@+id/lastActive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/roboto"
+                    android:text="Payload last active: "
+                    android:textColor="#DAFBF7"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/action"
+                    android:layout_width="160dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/circle_round"
+                    android:backgroundTint="#ffff"
+                    android:elevation="7dp"
+                    android:fontFamily="@font/calibrib"
+                    android:text="Set Dafault"
+                    android:textAllCaps="true"
+                    android:textColor="#000"
+                    android:textSize="13sp" />
+
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

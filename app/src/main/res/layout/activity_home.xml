@@ -28,38 +28,35 @@
             android:id="@+id/dropdown_menu"
             android:src="@drawable/ic_baseline_more_vert_24"/>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/avatar"
-            android:elevation="7dp"
-            android:layout_marginStart="10dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            app:civ_border_width="2dp"
-            app:civ_border_color="#fff"
-            android:layout_marginVertical="5dp"
-            android:src="@drawable/peakpx"/>
-
 
         <RelativeLayout
             android:id="@+id/top_one"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/avatar"
             android:layout_alignParentTop="true"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/outline_admin_panel_settings_24"
+                android:id="@+id/src_i"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                app:tint="#673AB7"/>
 
             <LinearLayout
+                android:id="@+id/profile_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/src_i"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/selected_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
@@ -71,7 +68,7 @@
                     android:textSize="17sp"/>
 
                 <TextView
-                    android:id="@+id/payload_h"
+                    android:id="@+id/device_uuid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
@@ -82,25 +79,52 @@
                     android:text="Your last session payload health was good"
                     android:textSize="14sp"/>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/cPaye"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:elevation="7dp"
-                    android:background="@drawable/circle_round"
-                    android:text="Check payload connection"
-                    android:textAllCaps="true"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/calibrib"
-                    android:textColor="#F6F6F6"/>
             </LinearLayout>
 
-
-
         </RelativeLayout>
+
+        <LinearLayout
+            android:layout_below="@id/top_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="7dp"
+            android:weightSum="2">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/set_device"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="35dp"
+                android:elevation="7dp"
+                android:background="@drawable/circle_round"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:backgroundTint="#E91E63"
+                android:text="Change Device"
+                android:textAllCaps="true"
+                android:textSize="13sp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/calibrib"
+                android:textColor="#F6F6F6"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/cPaye"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="35dp"
+                android:elevation="7dp"
+                android:background="@drawable/circle_round"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="Check payload conn."
+                android:textAllCaps="true"
+                android:textSize="13sp"
+                android:fontFamily="@font/calibrib"
+                android:textColor="#F6F6F6"/>
+
+
+        </LinearLayout>
 
     </RelativeLayout>
 

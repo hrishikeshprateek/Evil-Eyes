@@ -24,6 +24,7 @@ public class Logs extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.logsDisplay);
 
 
+
         return view;
     }
 }
