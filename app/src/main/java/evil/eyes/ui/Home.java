@@ -1,5 +1,6 @@
 package evil.eyes.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.MenuItem;
@@ -31,10 +32,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import evil.eyes.MainActivity;
 import evil.eyes.R;
 import evil.eyes.core.DeviceConfig;
 import evil.eyes.core.helpers.PayloadConnection;
 import evil.eyes.core.interfaces.PayloadConnectionListner;
+import evil.eyes.core.interfaces.onRestart;
 import evil.eyes.core.models.Devices;
 import evil.eyes.ui.fragments.HomeContent;
 import evil.eyes.ui.fragments.Logs;
@@ -42,7 +45,7 @@ import evil.eyes.ui.fragments.Recents;
 import evil.eyes.ui.fragments.Schedule;
 import evil.eyes.ui.fragments.Stats;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements onRestart {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -186,6 +189,14 @@ public class Home extends AppCompatActivity {
         });
         if (pos != null)
             viewPager.setCurrentItem(pos);
+    }
+
+    @Override
+    public void onRestartRequested() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
 

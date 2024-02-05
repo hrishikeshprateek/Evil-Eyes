@@ -44,7 +44,7 @@ public class DeviceConfig {
 
     public Devices getSelectedDevice() {
         if (sharedPreferences != null)
-            return new Devices(sharedPreferences.getString("UUID_LAST",null),
+            return new Devices(sharedPreferences.getString("UUID",null),
                     sharedPreferences.getString("ACTIVE",null),
                     sharedPreferences.getString("NAME",null));
         else return null;
