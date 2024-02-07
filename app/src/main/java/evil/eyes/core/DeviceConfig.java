@@ -17,7 +17,7 @@ public class DeviceConfig {
     private SharedPreferences sharedPreferences;
 
     public static DeviceConfig getInstance(Context context){
-        if ( deviceConfig == null) deviceConfig = new DeviceConfig(context);
+        if (deviceConfig == null) deviceConfig = new DeviceConfig(context);
         return deviceConfig;
     }
 
