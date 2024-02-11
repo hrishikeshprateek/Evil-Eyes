@@ -86,8 +86,6 @@ public class Home extends AppCompatActivity implements onRestart {
             checkPayloadConnection();
         });
 
-
-
         dropDown.setOnClickListener(o->{
             PopupMenu popupMenu = new PopupMenu(Home.this, dropDown);
 
@@ -151,8 +149,6 @@ public class Home extends AppCompatActivity implements onRestart {
         tabLayout.addTab(tabLayout.newTab().setText("Payload Logs"));
         tabLayout.addTab(tabLayout.newTab().setText("Devices"));
 
-
-
         gettabs(0);
         /*Bundle bundle = new Bundle();
         bundle = getArguments();
@@ -173,7 +169,6 @@ public class Home extends AppCompatActivity implements onRestart {
         viewPagerAdapter.addFragment(new Schedule(), "Schedule");
         viewPagerAdapter.addFragment(new Logs(), "Payload Logs");
         viewPagerAdapter.addFragment(new Stats(), "Devices");
-
 
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

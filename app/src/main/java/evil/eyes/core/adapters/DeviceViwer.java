@@ -14,10 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import evil.eyes.MainActivity;
 import evil.eyes.R;
 import evil.eyes.core.DeviceConfig;
-import evil.eyes.core.interfaces.onRestart;
 import evil.eyes.core.models.Devices;
 import evil.eyes.core.utils.TimeUtils;
 import evil.eyes.ui.Home;
