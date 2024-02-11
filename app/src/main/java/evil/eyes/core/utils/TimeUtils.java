@@ -18,17 +18,16 @@ import java.util.Locale;
 public class TimeUtils {
 
     /**
-
      * @apiNote Enter dateString in format of
      **/
-    public static long getTimeStampOfOriginToday(){
+    public static long getTimeStampOfOriginToday() {
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR); // current year
         int mMonth = c.get(Calendar.MONTH); // current month
         int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
 
-        c.set(mYear,mMonth,mDay,00,00,00);
-        c.set(Calendar.MILLISECOND,00);
+        c.set(mYear, mMonth, mDay, 00, 00, 00);
+        c.set(Calendar.MILLISECOND, 00);
 
         return c.getTimeInMillis();
     }
@@ -67,85 +66,83 @@ public class TimeUtils {
     }
 
     /**
-     *
-     * @param day date Type: int
+     * @param day   date Type: int
      * @param month month Type: integer
-     * @param year year Type: integer
+     * @param year  year Type: integer
      * @return TimeInMillis Type: String
      */
-    public static String getTimeStampOfGivenDate(int day, int month, int year){
+    public static String getTimeStampOfGivenDate(int day, int month, int year) {
         final Calendar cal = Calendar.getInstance();
-        cal.set(year,month-1,day,00,00,00);
-        cal.set(Calendar.MILLISECOND,00);
+        cal.set(year, month - 1, day, 00, 00, 00);
+        cal.set(Calendar.MILLISECOND, 00);
         return String.valueOf(cal.getTimeInMillis());
     }
 
-    public static String getDateOfOriginDaysBeforeAfter(@NonNull int noOfYears){
+    public static String getDateOfOriginDaysBeforeAfter(@NonNull int noOfYears) {
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR); // current year
         int mMonth = c.get(Calendar.MONTH); // current month
         int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
 
-        c.set(mYear,mMonth,mDay,00,00,00);
-        c.set(Calendar.MILLISECOND,00);
+        c.set(mYear, mMonth, mDay, 00, 00, 00);
+        c.set(Calendar.MILLISECOND, 00);
 
-        c.add(Calendar.YEAR,noOfYears);
+        c.add(Calendar.YEAR, noOfYears);
 
         return TimeUtils.getDateFromTimeStamp(c.getTimeInMillis());
     }
 
-    public static long getTimeStampOfOriginDaysBeforeAfterr(@NonNull int noOfDays){
+    public static long getTimeStampOfOriginDaysBeforeAfterr(@NonNull int noOfDays) {
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR); // current year
         int mMonth = c.get(Calendar.MONTH); // current month
         int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
 
-        c.set(mYear,mMonth,mDay,00,00,00);
-        c.set(Calendar.MILLISECOND,00);
+        c.set(mYear, mMonth, mDay, 00, 00, 00);
+        c.set(Calendar.MILLISECOND, 00);
 
-        c.add(Calendar.DAY_OF_MONTH,noOfDays);
+        c.add(Calendar.DAY_OF_MONTH, noOfDays);
 
         return c.getTimeInMillis();
     }
 
-    public static long getTimeStampOfOriginMonthBeforeAfterr(@NonNull int noOfMonth){
+    public static long getTimeStampOfOriginMonthBeforeAfterr(@NonNull int noOfMonth) {
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR); // current year
         int mMonth = c.get(Calendar.MONTH); // current month
         int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
 
-        c.set(mYear,mMonth,mDay,00,00,00);
-        c.set(Calendar.MILLISECOND,00);
+        c.set(mYear, mMonth, mDay, 00, 00, 00);
+        c.set(Calendar.MILLISECOND, 00);
 
-        c.add(Calendar.MONTH,noOfMonth);
+        c.add(Calendar.MONTH, noOfMonth);
 
         return c.getTimeInMillis();
     }
 
 
-
-    public static long getTimeStampOfOriginDaysBeforeAfter(@NonNull int noOfYears){
+    public static long getTimeStampOfOriginDaysBeforeAfter(@NonNull int noOfYears) {
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR); // current year
         int mMonth = c.get(Calendar.MONTH); // current month
         int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
 
-        c.set(mYear,mMonth,mDay,00,00,00);
-        c.set(Calendar.MILLISECOND,00);
+        c.set(mYear, mMonth, mDay, 00, 00, 00);
+        c.set(Calendar.MILLISECOND, 00);
 
-        c.add(Calendar.YEAR,noOfYears);
+        c.add(Calendar.YEAR, noOfYears);
 
         return c.getTimeInMillis();
     }
 
-    public static String getTimeFromTimeStamp(long time){
+    public static String getTimeFromTimeStamp(long time) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time);
         String date = DateFormat.format("dd-MM-yyyy hh:mm a", cal).toString();
         return date;
     }
 
-    public static String getTimeFromTimeStamp(String timeStamp){
+    public static String getTimeFromTimeStamp(String timeStamp) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         long time;
         time = Long.parseLong(timeStamp);
@@ -165,7 +162,7 @@ public class TimeUtils {
 
     }
 
-    public static String getDateFromTimeStamp(long time){
+    public static String getDateFromTimeStamp(long time) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time);
         String date = DateFormat.format("dd-MM-yyyy", cal).toString();
@@ -180,11 +177,11 @@ public class TimeUtils {
         }
     }
 
-    public static boolean checkForCorrectDateFormatInput(String date){
-        String dd = date.substring(0,2);
-        String dash = date.substring(2,3);
-        String month = date.substring(3,5);
-        String dash2 = date.substring(5,6);
+    public static boolean checkForCorrectDateFormatInput(String date) {
+        String dd = date.substring(0, 2);
+        String dash = date.substring(2, 3);
+        String month = date.substring(3, 5);
+        String dash2 = date.substring(5, 6);
         String year = date.substring(6);
 
         if (year.matches("[0-9]+")) {
@@ -209,9 +206,9 @@ public class TimeUtils {
                     }
                 } else return false;
 
-            }else return false;
+            } else return false;
 
-        }else return false;
+        } else return false;
 
     }
 
@@ -229,7 +226,7 @@ public class TimeUtils {
         d1 = format.parse(dateStart);
         d2 = format.parse(dateStop);
 
-         //in milliseconds
+        //in milliseconds
         long diff = d2.getTime() - d1.getTime();
 
         long diffSeconds = diff / 1000 % 60;
@@ -237,6 +234,45 @@ public class TimeUtils {
         long diffHours = diff / (60 * 60 * 1000) % 24;
         long diffDays = diff / (24 * 60 * 60 * 1000);
 
-        return  diffDays;
+        return diffDays;
+    }
+
+    public static String formatDateInLongFormat(String time) {
+        long timestamp = 0;
+        try {
+            timestamp = Long.parseLong(time);
+        } catch (NumberFormatException numberFormatException) {
+            return numberFormatException.toString();
+        }
+        // Convert timestamp to a human-readable date format
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM' 'yyyy' 'hh:mm:ss a", Locale.ENGLISH);
+        String formattedDate = sdf.format(timestamp);
+        formattedDate = addOrdinal(getDayOfMonth(timestamp)) + " " + formattedDate;
+
+        return formattedDate;
+    }
+
+    // Get the day of the month from a timestamp
+    private static int getDayOfMonth(long timestamp) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp);
+        return calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
+    // Add ordinal suffix to a number (e.g., 1st, 2nd, 3rd, 4th, etc.)
+    private static String addOrdinal(int number) {
+        if (number >= 11 && number <= 13) {
+            return number + "th";
+        }
+        switch (number % 10) {
+            case 1:
+                return number + "st";
+            case 2:
+                return number + "nd";
+            case 3:
+                return number + "rd";
+            default:
+                return number + "th";
+        }
     }
 }

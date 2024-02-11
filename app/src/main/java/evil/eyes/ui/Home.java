@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -48,21 +50,25 @@ import evil.eyes.ui.fragments.Stats;
 public class Home extends AppCompatActivity implements onRestart {
 
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+    public static ViewPager viewPager;
+    public static onRestart onRestart;
 
     private LinearLayout linearLayout;
     private ImageView dropDown;
     private TextToSpeech t1;
+    private AppCompatButton set_device;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        onRestart = this;
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
         linearLayout = findViewById(R.id.container);
         dropDown = findViewById(R.id.dropdown_menu);
+        set_device = findViewById(R.id.set_device);
         TextView selected_name = findViewById(R.id.selected_name);
         TextView device_uuid = findViewById(R.id.device_uuid);
         Devices selected_Device = DeviceConfig.getInstance(this).initializeStorage().getSelectedDevice();
@@ -185,6 +191,13 @@ public class Home extends AppCompatActivity implements onRestart {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+
+        set_device.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(4);
             }
         });
         if (pos != null)

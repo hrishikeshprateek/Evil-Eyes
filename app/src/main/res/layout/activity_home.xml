@@ -117,7 +117,7 @@
                 android:background="@drawable/circle_round"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:text="Check payload conn."
+                android:text="@string/ping_payload"
                 android:textAllCaps="true"
                 android:textSize="13sp"
                 android:fontFamily="@font/calibrib"
