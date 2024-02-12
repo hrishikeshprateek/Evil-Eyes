@@ -43,7 +43,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/calibri"
                     android:textStyle="bold"
-                    android:textAllCaps="true"
+                    android:textAllCaps="false"
                     android:layout_marginEnd="10dp"
                     android:text="Name:"
                     android:textColor="#F2FFFD"
@@ -56,6 +56,7 @@
                     android:fontFamily="@font/roboto"
                     android:layout_marginTop="2dp"
                     android:textColor="#DAFBF7"
+                    android:textAllCaps="false"
                     android:layout_marginEnd="10dp"
                     android:text="uuid: "
                     android:textSize="14sp"/>

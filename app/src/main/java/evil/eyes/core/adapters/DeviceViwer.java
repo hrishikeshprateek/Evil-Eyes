@@ -39,7 +39,7 @@ public class DeviceViwer extends RecyclerView.Adapter<DeviceViwer.ViewHolder> im
         Devices device = data.get(position);
 
         holder.name.setText("Name: "+device.getPrimaryAccountName());
-        holder.uuid.setText("UUID: "+device.getUUID());
+        holder.uuid.setText("uuid: "+device.getUUID());
         holder.time.setText("Payload last active: "+ TimeUtils.getTimeFromTimeStamp(device.getLastStartedTime()));
     }
 
