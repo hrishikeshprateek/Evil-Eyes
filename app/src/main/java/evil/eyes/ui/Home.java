@@ -3,7 +3,6 @@ package evil.eyes.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,7 +10,6 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -20,15 +18,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseException;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +49,7 @@ public class Home extends AppCompatActivity implements onRestart {
     private TextToSpeech t1;
     private AppCompatButton set_device;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +64,7 @@ public class Home extends AppCompatActivity implements onRestart {
         TextView selected_name = findViewById(R.id.selected_name);
         TextView device_uuid = findViewById(R.id.device_uuid);
         Devices selected_Device = DeviceConfig.getInstance(this).initializeStorage().getSelectedDevice();
+
         t1 = new TextToSpeech(this, status -> {
             if(status != TextToSpeech.ERROR) {
                 t1.setLanguage(Locale.US);
@@ -91,19 +84,18 @@ public class Home extends AppCompatActivity implements onRestart {
 
             // Inflating popup menu from popup_menu.xml file
             popupMenu.getMenuInflater().inflate(R.menu.menu_home, popupMenu.getMenu());
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem menuItem) {
-                    // Toast message on menu item clicked
-                    Toast.makeText(Home.this, "You Clicked " + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
-                    return true;
-                }
+
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                // Toast message on menu item clicked
+                Toast.makeText(Home.this, "You Clicked " + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                return true;
             });
             // Showing the popup menu
             popupMenu.show();
         });
 
     }
+
 
     private void checkPayloadConnection() {
         final AlertDialog[] alertDialog = {null};
@@ -150,6 +142,7 @@ public class Home extends AppCompatActivity implements onRestart {
         tabLayout.addTab(tabLayout.newTab().setText("Devices"));
 
         gettabs(0);
+
         /*Bundle bundle = new Bundle();
         bundle = getArguments();
         if (bundle !=null){
@@ -158,7 +151,7 @@ public class Home extends AppCompatActivity implements onRestart {
         }else{
             pos = 0;
             gettabs(pos);
-        }*/
+        } */
     }
 
     private void gettabs(Integer pos) {
@@ -206,7 +199,6 @@ public class Home extends AppCompatActivity implements onRestart {
         startActivity(intent);
         finish();
     }
-
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

@@ -1,5 +1,6 @@
 package evil.eyes.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,19 +30,20 @@ import evil.eyes.core.adapters.LogsDisplayAdapter;
 import evil.eyes.core.models.Devices;
 import evil.eyes.ui.Home;
 
-
 public class Logs extends Fragment {
 
     private DeviceConfig deviceConfig;
     private LinearLayout no_device;
-    private Devices device;
+    private Devices device = null;
     private ChildEventListener childEventListener;
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_logs, container, false);
+
         RecyclerView recyclerView = view.findViewById(R.id.logsDisplay);
         AppCompatButton setDevice = view.findViewById(R.id.setDevice);
         no_device = view.findViewById(R.id.no_found);
@@ -49,7 +51,7 @@ public class Logs extends Fragment {
 
         deviceConfig = DeviceConfig.getInstance(view.getContext()).initializeStorage();
 
-        if (deviceConfig.getSelectedDevice() == null) {
+        if (deviceConfig.getSelectedDevice().getUUID() == null) {
             no_device.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
 
@@ -129,10 +131,12 @@ public class Logs extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        FirebaseDatabase
-                .getInstance()
-                .getReference("Logs")
-                .child(device.getUUID())
-                .removeEventListener(childEventListener);
+        if (device != null) {
+            FirebaseDatabase
+                    .getInstance()
+                    .getReference("Logs")
+                    .child(device.getUUID())
+                    .removeEventListener(childEventListener);
+        }
     }
 }
