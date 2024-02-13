@@ -1,5 +1,8 @@
 package evil.eyes.ui;
 
+import static evil.eyes.R.*;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -20,6 +23,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,19 +54,20 @@ public class Home extends AppCompatActivity implements onRestart {
     private AppCompatButton set_device;
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(layout.activity_home);
         onRestart = this;
 
-        tabLayout = findViewById(R.id.tabLayout);
-        viewPager = findViewById(R.id.viewPager);
-        linearLayout = findViewById(R.id.container);
-        dropDown = findViewById(R.id.dropdown_menu);
-        set_device = findViewById(R.id.set_device);
-        TextView selected_name = findViewById(R.id.selected_name);
-        TextView device_uuid = findViewById(R.id.device_uuid);
+        tabLayout = findViewById(id.tabLayout);
+        viewPager = findViewById(id.viewPager);
+        linearLayout = findViewById(id.container);
+        dropDown = findViewById(id.dropdown_menu);
+        set_device = findViewById(id.set_device);
+        TextView selected_name = findViewById(id.selected_name);
+        TextView device_uuid = findViewById(id.device_uuid);
         Devices selected_Device = DeviceConfig.getInstance(this).initializeStorage().getSelectedDevice();
 
         t1 = new TextToSpeech(this, status -> {
@@ -75,7 +80,7 @@ public class Home extends AppCompatActivity implements onRestart {
         device_uuid.setText(selected_Device.getUUID());
 
         setupTabs();
-        findViewById(R.id.cPaye).setOnClickListener(l -> {
+        findViewById(id.cPaye).setOnClickListener(l -> {
             checkPayloadConnection();
         });
 
@@ -83,11 +88,33 @@ public class Home extends AppCompatActivity implements onRestart {
             PopupMenu popupMenu = new PopupMenu(Home.this, dropDown);
 
             // Inflating popup menu from popup_menu.xml file
-            popupMenu.getMenuInflater().inflate(R.menu.menu_home, popupMenu.getMenu());
+            popupMenu.getMenuInflater().inflate(menu.menu_home, popupMenu.getMenu());
 
             popupMenu.setOnMenuItemClickListener(menuItem -> {
                 // Toast message on menu item clicked
-                Toast.makeText(Home.this, "You Clicked " + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                switch (menuItem.getItemId()){
+                    case id.react_native :
+                        //Logout button
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(Home.this, LoginActivity.class));
+                        finish();
+                        break;
+                    case id.android :
+                        //About us button
+                        new AlertDialog.Builder(Home.this)
+                                .setTitle("About")
+                                .setView(layout.dialog_layout)
+                                .setPositiveButton("OK",(r,i)->r.dismiss())
+                                .setCancelable(false)
+                                .show();
+                        break;
+                    case id.kotlin :
+                        //Disclaimer
+                        break;
+                    case id.java:
+                        break;
+
+                }
                 return true;
             });
             // Showing the popup menu

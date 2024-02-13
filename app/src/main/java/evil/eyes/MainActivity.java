@@ -16,13 +16,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                LogAnalyzerStarter.getCallLogsAnalyzer().releaseMemory(MainActivity.this);
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                finish();
-            }
+        new Handler().postDelayed(() -> {
+            LogAnalyzerStarter.getCallLogsAnalyzer().releaseMemory(MainActivity.this);
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
         },2000);
     }
 }
